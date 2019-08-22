@@ -1,0 +1,51 @@
+import React, { useState } from 'react';
+import Hamburger from '../Hamburger';
+import {
+  NavContainer,
+  Nav,
+  Overlay,
+  OverlayContainer,
+  Link
+} from './style'
+
+const NavBar = ({ logged }) => {
+  const isLoggedRoutes = ["home", "locations", "resources", "events", "account", "logout"]
+  const notLoggedRoutes = ["home", "locations", "resources", "events", "signup", "login"]
+  const [isOpen, setIsOpen ] = useState(false)
+  window.onresize = ()=> (window.innerWidth > 900 && isOpen) && setIsOpen(false)
+  return (
+    <NavContainer color={"white"}>
+      <Nav>
+      {
+        logged 
+        ?
+        isLoggedRoutes.map((route, i) =>
+          <Link exact to={`/${route}`} key={i}>{route}</Link>
+          )
+          :
+        notLoggedRoutes.map((route, i) =>
+          <Link exact to={`/${route}`} key={i}>{route}</Link>
+        )
+      }
+      <Hamburger setIsOpen={setIsOpen} isOpen={isOpen} />
+      </Nav>
+      <OverlayContainer className={isOpen ? "show" : "hide"}>
+      <Overlay>
+        {
+          logged 
+          ?
+          isLoggedRoutes.map((route, i) =>
+            <Link exact to={`/${route}`} key={i}>{route}</Link>
+          )
+          :
+          notLoggedRoutes.map((route, i) =>
+            <Link exact to={`/${route}`} key={i}>{route}</Link>
+          )
+        }
+      </Overlay>
+      </OverlayContainer>
+    </NavContainer>
+  )
+}
+
+export default NavBar
