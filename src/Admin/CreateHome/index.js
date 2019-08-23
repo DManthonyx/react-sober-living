@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 
 import {
   Section,
@@ -16,15 +17,20 @@ class CreateHomes extends Component {
     longitude: '',
     latitude: '',
     title: '',
-    image: {},
+    image: '',
     description: '',
-    phone_numer: '',
+    phone_number: '',
     email: '',
     link: '',
     }
 
-  onInputChange = (e) => { this.setState({ [e.target.name]: e.target.value }) 
-  };
+    onInputChange = (e) => {
+      if(e.target.name !== 'image'){
+        this.setState({[e.target.name]: e.target.value});
+      } else {
+        this.setState({image: e.target.files[0]});
+      }
+    }
 
   submit = async (e) => {
     e.preventDefault();
@@ -39,22 +45,35 @@ class CreateHomes extends Component {
     data.append('link', this.state.link);
     data.append('phone_number', this.state.phone_number);
     data.append('email', this.state.email);
-    data.append('image', this.state.ethnicity);
+    data.append('file', this.state.image);
+
+    this.setState({
+      city: '',
+      address: '',
+      longitude: '',
+      latitude: '',
+      title: '',
+      image: '',
+      description: '',
+      phone_number: '',
+      email: '',
+      link: '',
+    })
+
     const registerCall = this.props.createHome(data);
 
     registerCall.then((data) => {
-      console.log(data, 'this is data')
-        if(data.status.message === "Success"){
-          this.props.history.push('/account')
+      console.log(data)
+        if(data.status.message === "Success") {
+          this.props.history.push(`account/${data.data.id}`)
         } else {
           console.log(data, ' this should have an error message? How could you display that on the screen')
         }
     })
-    console.log(this.state)
   }
 
   render () {
-    const { city, address, longitude, latitude, title, image, description, phone_numer, email, link } = this.state
+    const { city, address, longitude, latitude, title, description, phone_number, email, link, image} = this.state
   return (
     <div>
       <Section>
@@ -66,10 +85,10 @@ class CreateHomes extends Component {
           <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
           <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
           <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
-          <Input type="text" name="phone_number" placeholder="phone number" value={phone_numer} onChange={this.onInputChange} />
+          <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
           <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
           <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
-          <Input type="file" name="image" placeholder="image" value={image} onChange={this.onInputChange} />
+          <Input type="file" name="image" placeholder="image" onChange={this.onInputChange} />
           <Submit>SUBMIT</Submit>
         </Form>
       </Section>
@@ -78,4 +97,4 @@ class CreateHomes extends Component {
   }
 }
 
-export default CreateHomes
+export default withRouter(CreateHomes)

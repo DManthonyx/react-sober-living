@@ -16,7 +16,7 @@ class LogIn extends Component {
     login.then((data) => {
       if(data.status.message === 'Success'){
         console.log(data, 'this is login data')
-        this.props.history.push('/account')
+        this.props.history.push(`/account/${data.data.id}`)
       } else {
         console.log(data, this.props)
       }
@@ -26,15 +26,13 @@ class LogIn extends Component {
   }
 
   render () {
-   const { password, user_type, email } = this.state
-   console.log(this.state, 'this is login')
     return (
       <div>
         <form onSubmit={this.submitLogIn}>
           <label>Email:</label>
-            <input type="email" name="email" value={email} onChange={this.onInputChange} />
+            <input type="email" name="email" onChange={this.onInputChange} />
           <label>Password:</label>
-            <input type="password" name="password" value={password} onChange={this.onInputChange} />
+            <input type="password" name="password" onChange={this.onInputChange} />
           <button>Log In</button>
         </form>
       </div>

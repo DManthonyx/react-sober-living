@@ -33,17 +33,13 @@ class SignUp extends Component {
     data.append('email', this.state.email);
     data.append('ethnicity', this.state.ethnicity);
     data.append('gender', this.state.gender);
-    console.log(data.entries(), ' this is data')
-    for (let pair of data.entries()){
-      console.log(pair[0]  ,', ', pair[1])
-    }
 
     const registerCall = this.props.register(data);
 
     registerCall.then((data) => {
       console.log(data, 'this is data')
         if(data.status.message === "Success"){
-          this.props.history.push('/account')
+          this.props.history.push(`/account/${data.data.id}`)
         } else {
           console.log(data, ' this should have an error message? How could you display that on the screen')
         }
@@ -56,26 +52,25 @@ class SignUp extends Component {
   }
   
   render () {
-   const {name, last_name, password, re_password, user_type, age, phone_number, email, ethnicity, gender } = this.state
     return (
       <div>
         <h1>SignUp</h1>
         <form onSubmit={this.submit}>
-          <input className="name" type="text" placeholder="first name" name="name" value={name}  onChange={this.onInputChange} />
-          <input className="last_name" type="text" placeholder="last name" name="last_name" value={last_name} onChange={this.onInputChange} />
-          <input className="password" type="password" placeholder="password" name="password" value={password} onChange={this.onInputChange} />
-          <input className="re_password" type="password" placeholder="re-password" name="re_password" value={re_password} onChange={this.onInputChange} />
-          <select className="user_type" name="user_type" value={user_type} onChange={this.onInputChange}>
+          <input className="name" type="text" placeholder="first name" name="name" onChange={this.onInputChange} />
+          <input className="last_name" type="text" placeholder="last name" name="last_name" onChange={this.onInputChange} />
+          <input className="password" type="password" placeholder="password" name="password" onChange={this.onInputChange} />
+          <input className="re_password" type="password" placeholder="re-password" name="re_password" onChange={this.onInputChange} />
+          <select className="user_type" name="user_type" onChange={this.onInputChange}>
             <option>user type</option>
             <option>busniess</option>
             <option>client</option>
             <option>admin</option>
           </select>
-          <input className="age" type="number" name="age" placeholder="age" value={age} onChange={this.onInputChange} />
-          <input className="phone_number" type="text" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
-          <input className="email" type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
-          <input className="ethnicity" type="text" name="ethnicity" placeholder="ethnicity" value={ethnicity} onChange={this.onInputChange} />
-          <select className="gender" name ="gender" value={gender} onChange={this.onInputChange}>
+          <input className="age" type="number" name="age" placeholder="age" onChange={this.onInputChange} />
+          <input className="phone_number" type="text" name="phone_number" placeholder="phone number" onChange={this.onInputChange} />
+          <input className="email" type="email" name="email" placeholder="email" onChange={this.onInputChange} />
+          <input className="ethnicity" type="text" name="ethnicity" placeholder="ethnicity" onChange={this.onInputChange} />
+          <select className="gender" name ="gender" onChange={this.onInputChange}>
             <option>gender</option>
             <option>Male</option>
             <option>Female</option>

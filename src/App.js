@@ -7,8 +7,7 @@ import Resources from './Resources';
 import Events from './Events';
 import Locations from './Locations';
 import LogIn from './LogIn';
-import Account from './Account';
-
+import Account from './Account'
 class App extends Component {
 
   state = {
@@ -20,16 +19,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log('component mount');
-    
-    this.setState({
-      
-    })
+    this.getHomes()
   };
 
   register = async (data) => {
     try {
-      const registerResponse = await fetch('http://localhost:8000/user/signup', {
+      const registerResponse = await fetch(`http://localhost:8000/user/signup`, {
         method: 'POST',
         credentials: 'include',
         body: data,
@@ -52,7 +47,7 @@ class App extends Component {
 
   login = async (loginInfo) => {
     try {
-      const loginResponse = await fetch('http://localhost:8000/user/login', {
+      const loginResponse = await fetch(`http://localhost:8000/user/login`, {
         method: 'POST',
         credentials: 'include',// on every request we have to send the cookie
         body: JSON.stringify(loginInfo),
@@ -79,7 +74,7 @@ class App extends Component {
 
   logout = async () => {
     try {
-      const loginResponse = await fetch('http://localhost:8000/user/logout', {
+      const loginResponse = await fetch(`http://localhost:8000/user/logout`, {
         method: 'GET',
         credentials: 'include',
       })
@@ -93,28 +88,44 @@ class App extends Component {
     }
   }
 
-  // getAllHomes = async () => {
-  //   try {
-  //     const loginResponse = await fetch('http://localhost:8000/user/logout', {
-  //       method: 'GET',
-  //       credentials: 'include',
-  //     })
-  //   } catch(err) {
-  //     console.log(err)
-  //   }
-  // }
+  getHomes = async () => {
+    try {
+      const getHomes = await fetch(`http://localhost:8000/home/`, {
+        method: 'GET',
+        credentials: 'include',// on every request we have to send the cookie
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if(getHomes.ok) {
+        const responseParsed = await getHomes.json()
+        console.log(responseParsed.data)
+        this.setState({
+          homes: responseParsed.data
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   render () {
-    console.log(this.state, 'this is state')
     return (
       <div>
         <NavBar logged={this.state.isLogged}/>
         <Switch>
+          <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/locations' render={(props) =>  <Locations {...props} />} />
           <Route exact path='/resources' render={(props) =>  <Resources {...props} />} />
           <Route exact path='/events' render={(props) =>  <Events {...props} />} /> 
-          <Route exact path='/account' render={(props) =>  <Account {...props} user_type={this.state.user_type}/>} /> 
+          {/* {
+            const getUser = () => {
+            const Account = this.state.user_type
+            return <Route exact path={'/account/:id'} render={(props) =>  <Account /> } />
+          }
+          } */}
+          <Route exact path='/account/:id' render={(props) =>  <Account {...props} user_type={this.state.user_type}/>} /> 
           <Route exact path='/signup' render={(props) =>  <SignUp {...props} register={this.register} />} />         
           <Route exact path='/login' render={(props) =>  <LogIn {...props} login={this.login} />} />
         </Switch>
