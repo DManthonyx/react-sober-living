@@ -62,7 +62,7 @@ class SignUp extends Component {
           <input className="re_password" type="password" placeholder="re-password" name="re_password" onChange={this.onInputChange} />
           <select className="user_type" name="user_type" onChange={this.onInputChange}>
             <option>user type</option>
-            <option>busniess</option>
+            <option>business</option>
             <option>client</option>
             <option>admin</option>
           </select>

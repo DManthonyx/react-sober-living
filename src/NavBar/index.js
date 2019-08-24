@@ -8,7 +8,7 @@ import {
   Link
 } from './style'
 
-const NavBar = ({ logged }) => {
+const NavBar = ({ logged,id }) => {
   const isLoggedRoutes = ["home", "locations", "resources", "events", "account", "logout"]
   const notLoggedRoutes = ["home", "locations", "resources", "events", "signup", "login"]
   const [isOpen, setIsOpen ] = useState(false)
@@ -20,7 +20,7 @@ const NavBar = ({ logged }) => {
         logged 
         ?
         isLoggedRoutes.map((route, i) =>
-          <Link exact to={`/${route}`} key={i}>{route}</Link>
+          route === "account" ?  <Link exact to={`/${route}/${id}`} key={i}>{route}</Link> :<Link exact to={`/${route}`} key={i}>{route}</Link>
           )
           :
         notLoggedRoutes.map((route, i) =>

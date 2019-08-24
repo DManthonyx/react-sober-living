@@ -1,11 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Resources = () => {
+class Resource extends Component {
+
+  state = {
+    resources: []
+  }
+
+  async componentDidMount() {
+    this.getResources()
+  };
+
+  
+  getResources = async () => {
+    try {
+      const getResources = await fetch(`http://localhost:8000/resource/`, {
+        method: 'GET',
+        credentials: 'include',// on every request we have to send the cookie
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if(getResources.ok) {
+        const responseParsed = await getResources.json()
+        console.log(responseParsed.data)
+        this.setState({
+          resources: responseParsed.data
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  render() {
   return (
     <div>
-      here
+      events
     </div>
   )
+  }
 }
 
-export default Resources
+export default Resource

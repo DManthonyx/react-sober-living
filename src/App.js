@@ -12,6 +12,7 @@ class App extends Component {
 
   state = {
     name: '',
+    id:'',
     user_type: '',
     loading: false,
     homes: [],
@@ -61,6 +62,7 @@ class App extends Component {
         this.setState(() => {
           return {
             ...parsedResponse.data,
+            id: parsedResponse.data.id,
             loading: false,
             isLogged: true
           }
@@ -81,7 +83,8 @@ class App extends Component {
       this.setState({
         isLogged: false,
         user_type: '',
-        name: ''
+        name: '',
+        id: ''
       })
     } catch(err) {
       console.log(err)
@@ -109,10 +112,12 @@ class App extends Component {
     }
   }
 
+
   render () {
+    console.log(this.state)
     return (
       <div>
-        <NavBar logged={this.state.isLogged}/>
+        <NavBar logged={this.state.isLogged} id={this.state.id}/>
         <Switch>
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
@@ -125,7 +130,14 @@ class App extends Component {
             return <Route exact path={'/account/:id'} render={(props) =>  <Account /> } />
           }
           } */}
-          <Route exact path='/account/:id' render={(props) =>  <Account {...props} user_type={this.state.user_type}/>} /> 
+          {
+            this.state.isLogged
+            ?
+            <Route exact path='/account/:id' render={(props) =>  <Account {...props} user_type={this.state.user_type}/>} /> 
+            :
+            <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
+          }
+          
           <Route exact path='/signup' render={(props) =>  <SignUp {...props} register={this.register} />} />         
           <Route exact path='/login' render={(props) =>  <LogIn {...props} login={this.login} />} />
         </Switch>

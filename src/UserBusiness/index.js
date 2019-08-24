@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const UserBusiness = () => {
+class UserBusiness extends Component {
+  state = {
+    homes:  []
+  }
+  async componentDidMount () {
+    this.getHomes()
+  }
+  render () {
+
+
   return (
     <div>
       Business
     </div>
   )
+  }
 }
 
 export default UserBusiness

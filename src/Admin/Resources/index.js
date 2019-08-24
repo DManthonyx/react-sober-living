@@ -9,28 +9,73 @@ import {
   Submit
 } from './style'
 
-class CreateHomes extends Component {
+class Resources extends Component {
 
   state = {
+    resources: [],
     city: '',
     address: '',
     longitude: '',
     latitude: '',
-    title: '',
-    image: '',
     description: '',
+    name: '',
     phone_number: '',
-    email: '',
     link: '',
-    }
+  }
 
-    onInputChange = (e) => {
-      if(e.target.name !== 'image'){
-        this.setState({[e.target.name]: e.target.value});
-      } else {
-        this.setState({image: e.target.files[0]});
-      }
+  async componentDidMount() {
+    this.getResources();
+  };
+
+  onInputChange = (e) => {
+    if(e.target.name !== 'image'){
+      this.setState({[e.target.name]: e.target.value});
+    } else {
+    this.setState({image: e.target.files[0]});
     }
+  }
+
+  getResources = async () => {
+    try {
+      const getResources = await fetch(`http://localhost:8000/resource/`, {
+        method: 'GET',
+        credentials: 'include',// on every request we have to send the cookie
+        headers: {
+          'Content-Type': 'application/json'
+      }
+      })
+      if(getResources.ok) {
+        const responseParsed = await getResources.json()
+        console.log(responseParsed.data)
+        this.setState({
+          resources: responseParsed.data
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  createResource = async (data) => {
+    try {
+      const createResource = await fetch(`http://localhost:8000/resource/`, {
+        method: 'POST',
+        credentials: 'include',
+        body: data,
+        headers: {
+          'enctype': 'multipart/form-data'
+        }
+      })
+      const response = await createResource.json();
+      console.log(response)
+      this.setState({
+        resources: [...this.state.resources, response.data]
+      })
+      return response;
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   submit = async (e) => {
     e.preventDefault();
@@ -40,32 +85,29 @@ class CreateHomes extends Component {
     data.append('address', this.state.address);
     data.append('longitude', this.state.longitude);
     data.append('latitude', this.state.latitude);
-    data.append('title', this.state.title);
     data.append('description', this.state.description);
+    data.append('name', this.state.name);
     data.append('link', this.state.link);
     data.append('phone_number', this.state.phone_number);
-    data.append('email', this.state.email);
-    data.append('file', this.state.image);
+    data.append('link', this.state.link);
 
     this.setState({
       city: '',
       address: '',
       longitude: '',
       latitude: '',
-      title: '',
-      image: '',
       description: '',
+      name: '',
       phone_number: '',
-      email: '',
       link: '',
     })
 
-    const registerCall = this.props.createHome(data);
+    const registerCall = this.createResource(data);
 
     registerCall.then((data) => {
       console.log(data)
         if(data.status.message === "Success") {
-          this.props.history.push(`account/${data.data.id}`)
+          this.props.history.push(`account/${this.props.id}`)
         } else {
           console.log(data, ' this should have an error message? How could you display that on the screen')
         }
@@ -73,22 +115,25 @@ class CreateHomes extends Component {
   }
 
   render () {
-    const { city, address, longitude, latitude, title, description, phone_number, email, link, image} = this.state
+    const { resources, city, address, longitude, latitude, name, description, phone_number, link} = this.state
   return (
     <div>
       <Section>
-        <H1>Create Homes</H1>
+        {
+          resources.map((r, i) => {
+            return <p key={i}>{r.name}</p>
+          })
+        }
+        <H1>Create Resources</H1>
         <Form onSubmit={this.submit}>
           <Input type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
           <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
           <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
           <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
-          <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
+          <Input type="text" name="name" placeholder="name" value={name} onChange={this.onInputChange} />
           <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
           <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
-          <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
           <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
-          <Input type="file" name="image" placeholder="image" onChange={this.onInputChange} />
           <Submit>SUBMIT</Submit>
         </Form>
       </Section>
@@ -97,4 +142,4 @@ class CreateHomes extends Component {
   }
 }
 
-export default withRouter(CreateHomes)
+export default withRouter(Resources)

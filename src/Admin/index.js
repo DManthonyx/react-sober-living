@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import CreateHome from './CreateHome'
-import CreateEvents from './CreateEvent'
-import CreateResources from './CreateResource'
+import Homes from './Homes'
+import Events from './Events'
+import Resources from './Resources'
 
 import {
   Section,
@@ -12,26 +12,27 @@ import {
 class Admin extends Component {
 
   state = {
-    homes: []
+    users: []
   }
+  
   async componentDidMount() {
-    this.getHomes();
+    this.getUsers();
   };
 
-  getHomes = async () => {
+  getUsers = async () => {
     try {
-      const getHomes = await fetch(`http://localhost:8000/home/`, {
+      const getUsers = await fetch(`http://localhost:8000/user/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      if(getHomes.ok) {
-        const responseParsed = await getHomes.json()
+      if(getUsers.ok) {
+        const responseParsed = await getUsers.json()
         console.log(responseParsed.data)
         this.setState({
-          homes: responseParsed.data
+          users: responseParsed.data
         })
       }
     } catch (err) {
@@ -39,90 +40,43 @@ class Admin extends Component {
     }
   }
 
-  createHome = async (data) => {
-    try {
-      const createHome = await fetch(`http://localhost:8000/home/`, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-        headers: {
-          'enctype': 'multipart/form-data'
-        }
-      })
-      const response = await createHome.json();
-      console.log(response)
-      return response;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  createEvent = async (data) => {
-    try {
-      const createEvent = await fetch(`http://localhost:8000/event/`, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-        headers: {
-          'enctype': 'multipart/form-data'
-        }
-      })
-      const response = await createEvent.json();
-      console.log(response)
-      return response;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  createResource = async (data) => {
-    try {
-      const createResource = await fetch(`http://localhost:8000/resource/`, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-        headers: {
-          'enctype': 'multipart/form-data'
-        }
-      })
-      const response = await createResource.json();
-      console.log(response)
-      return response;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   render () {
-    console.log(this.state)
-    const { homes } = this.state
+    const { id } = this.props
+    console.log(id)
+    const { users } = this.state
+    const business = users.filter(u => u.user_type === 'business')
+    const client = users.filter(u => u.user_type === 'client')
   return (
     <div>
       <Section>
         <H1>Homes</H1>
-        {
-          homes.map((h, i) => {
-            return <p key={i}>{h.title}</p>
-          })
-        }
-        <CreateHome createHome={this.createHome}/>
+        <Homes id={id}/>
       </Section>
       <Section>
         <H1>Business</H1>
-        
+        {
+         business.map((b,i) => {
+          return <p key={i}>{b.name}</p>
+         })
+        }
       </Section>
       <Section>
-        <H1>User</H1>
-        
+        <H1>Client</H1>
+        {
+         client.map((c,i) => {
+           return <p key={i}>{c.name}</p>
+         })
+        }
       </Section>
       <Section>
         <H1>Events</H1>
 
-        <CreateEvents createEvent={this.createEvent}/>
+        <Events id={id}/>
       </Section>
       <Section>
         <H1>Resources</H1>
-        
-        <CreateResources createResource={this.createResource}/>
+
+        <Resources id={id}/>
       </Section>
     </div>
   )

@@ -4,15 +4,16 @@ import UserBusiness from '../UserBusiness'
 import UserClient from '../UserClient'
 
 class Account extends Component {
+  
   render () {
-    
+    const { id } = this.props.match.params
     let account;
     if (this.props.user_type === 'admin') {
-      account = <Admin />
+      account = <Admin id={id}/>
     } else if(this.props.user_type === 'client') {
-      account = <UserClient/>
+      account = <UserClient id={id}/>
     } else {
-      account = <UserBusiness />
+      account = <UserBusiness id={id}/>
     }
     console.log(this.props.user_type, 'this is account ')
     return (
