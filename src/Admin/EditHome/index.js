@@ -8,7 +8,6 @@ import {
 } from './style'
 
 const EditHome = (props) =>  {
-console.log(props, 'this is props')
   return (
     <Section>
       <H1>Edit Home</H1>

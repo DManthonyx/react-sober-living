@@ -12,8 +12,21 @@ class SignUp extends Component {
     phone_number: '',
     email: '',
     ethnicity: '',
-    gender: '',
-    
+    gender: '', 
+  }
+
+  async componentDidMount() {
+    document.addEventListener('keydown', this.checkform())
+  }
+
+  async componentWillMount() {
+    document.removeEventListener('keydown', this.checkform())
+  }
+
+  checkform = () => {
+    const password = this.state.name
+    const btn = document.querySelector('button')
+
   }
   
   onInputChange = (e) => { this.setState({ [e.target.name]: e.target.value }) 
@@ -46,12 +59,9 @@ class SignUp extends Component {
     })
     console.log(this.state)
   }
-
-  checkform = () => {
-    const name = document.querySelector('name').value
-  }
   
   render () {
+
     return (
       <div>
         <h1>SignUp</h1>

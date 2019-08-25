@@ -8,20 +8,26 @@ import {
   Link
 } from './style'
 
-const NavBar = ({ logged,id }) => {
-  const isLoggedRoutes = ["home", "locations", "resources", "events", "account", "logout"]
+const NavBar = ({ logged,id, logout }) => {
+  const isLoggedRoutes = ["home", "locations", "resources", "events", "account"]
   const notLoggedRoutes = ["home", "locations", "resources", "events", "signup", "login"]
   const [isOpen, setIsOpen ] = useState(false)
   window.onresize = ()=> (window.innerWidth > 900 && isOpen) && setIsOpen(false)
+  
   return (
     <NavContainer color={"white"}>
       <Nav>
       {
         logged 
         ?
+        <div>
+        {
         isLoggedRoutes.map((route, i) =>
           route === "account" ?  <Link exact to={`/${route}/${id}`} key={i}>{route}</Link> :<Link exact to={`/${route}`} key={i}>{route}</Link>
           )
+        }
+          <h1 onClick={logout}>logout</h1>
+        </div>
           :
         notLoggedRoutes.map((route, i) =>
           <Link exact to={`/${route}`} key={i}>{route}</Link>

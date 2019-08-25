@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import NavBar from './NavBar';
 import Home from './Home';
 import SignUp from './SignUp';
@@ -8,6 +8,16 @@ import Events from './Events';
 import Locations from './Locations';
 import LogIn from './LogIn';
 import Account from './Account'
+
+const My404 = () => {
+  return (
+    <div>
+      <Redirect to='/home' />
+    </div>
+  )
+};
+
+
 class App extends Component {
 
   state = {
@@ -86,6 +96,8 @@ class App extends Component {
         name: '',
         id: ''
       })
+      this.props.history.push('/home')
+
     } catch(err) {
       console.log(err)
     }
@@ -95,7 +107,7 @@ class App extends Component {
     try {
       const getHomes = await fetch(`http://localhost:8000/home/`, {
         method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -115,21 +127,16 @@ class App extends Component {
 
   render () {
     console.log(this.state)
+    
     return (
       <div>
-        <NavBar logged={this.state.isLogged} id={this.state.id}/>
+        <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout}/>
         <Switch>
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/locations' render={(props) =>  <Locations {...props} />} />
           <Route exact path='/resources' render={(props) =>  <Resources {...props} />} />
           <Route exact path='/events' render={(props) =>  <Events {...props} />} /> 
-          {/* {
-            const getUser = () => {
-            const Account = this.state.user_type
-            return <Route exact path={'/account/:id'} render={(props) =>  <Account /> } />
-          }
-          } */}
           {
             this.state.isLogged
             ?
@@ -137,13 +144,13 @@ class App extends Component {
             :
             <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           }
-          
           <Route exact path='/signup' render={(props) =>  <SignUp {...props} register={this.register} />} />         
           <Route exact path='/login' render={(props) =>  <LogIn {...props} login={this.login} />} />
+          <Route component={ My404 } />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

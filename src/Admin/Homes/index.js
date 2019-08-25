@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import EditHome from '../EditHome'
+import CreateHome from '../CreateHome'
 
 import {
   Section,
@@ -10,23 +11,25 @@ import {
   Submit
 } from './style'
 
+const initialState = {
+  homes: [],
+  city: '',
+  address: '',
+  longitude: '',
+  latitude: '',
+  title: '',
+  image: '',
+  description: '',
+  phone_number: '',
+  email: '',
+  link: '',
+  showEditModal: false,
+  homeToEdit: {}
+}
+
 class Homes extends Component {
 
-  state = {
-    homes: [],
-    city: '',
-    address: '',
-    longitude: '',
-    latitude: '',
-    title: '',
-    image: '',
-    description: '',
-    phone_number: '',
-    email: '',
-    link: '',
-    showEditModal: false,
-    homeToEdit: {}
-    }
+  state = initialState 
 
   async componentDidMount () {
     this.getHomes()
@@ -92,8 +95,21 @@ class Homes extends Component {
       const response = await createHome.json();
       console.log(response)
       this.setState({
-        homes: [...this.state.homes, response.data]
+        homes: [...this.state.homes, response.data],
+        city: '',
+        address: '',
+        longitude: '',
+        latitude: '',
+        title: '',
+        image: '',
+        description: '',
+        phone_number: '',
+        email: '',
+        link: '',
+        showEditModal: false,
+        homeToEdit: {}
       })
+      console.log(this.state)
       return response;
     } catch (err) {
       console.log(err)
@@ -115,18 +131,6 @@ class Homes extends Component {
     data.append('email', this.state.email);
     data.append('file', this.state.image);
 
-    this.setState({
-      city: '',
-      address: '',
-      longitude: '',
-      latitude: '',
-      title: '',
-      image: '',
-      description: '',
-      phone_number: '',
-      email: '',
-      link: '',
-    })
 
     const registerCall = this.createHome(data);
 
@@ -162,10 +166,26 @@ class Homes extends Component {
   }
 
   showModal = (home) => {
-    this.setState({
-      homeToEdit: home,
-      showEditModal: !this.state.showEditModal
-    })
+    console.log(home, this.state.homeToEdit, 'showmodal')
+    console.log({})
+    if(this.state.homeToEdit == {}) {
+      this.setState({
+        homeToEdit: home,
+        showEditModal: true
+      }) 
+      console.log(this.homeToEdit, 'home edit')
+     
+    } else if (home.id === this.state.homeToEdit.id) {
+      this.setState({
+        homeToEdit: home,
+        showEditModal: !this.state.showEditModal
+      })
+    } else {
+      this.setState({
+        homeToEdit: home,
+        showEditModal: true
+      })
+    }
   }
 
   closeAndEdit = async (e) => {
@@ -182,7 +202,6 @@ class Homes extends Component {
     data.append('email', this.state.homeToEdit.email);
     data.append('file', this.state.homeToEdit.image);
     try {
-      console.log(this.state.homeToEdit)
       const editRequest = await fetch(`http://localhost:8000/home/${this.state.homeToEdit.id}/edit`, {
         method: 'PUT',
         credentials: 'include',
@@ -190,14 +209,17 @@ class Homes extends Component {
         headers: {
         'enctype': 'multipart/form-data'
       }
-      })
+    })
       if(editRequest.status !== 200){
         throw Error('editResquest not working')
       }
       const editResponse = await editRequest.json();
+      console.log(this.state.homes, 'homes')
+      console.log(editResponse.data, 'edit response')
+      console.log()
       const editedHomeArray = this.state.homes.map((home) => {
         // remember map creates a brand new array
-        if(home._id === editResponse.data._id){
+        if(home.id === editResponse.data.id){
         // comparing every movie in the array, the
         // movie we edited
         // and if they match update the movie with response
@@ -206,8 +228,10 @@ class Homes extends Component {
         }
         return home
       });
+    
+      console.log(editedHomeArray, 'edited home array')
       this.setState({
-        movies: editedHomeArray,
+        homes: editedHomeArray,
         showEditModal: false
       })
       console.log(editResponse, ' editResponse');
@@ -218,7 +242,8 @@ class Homes extends Component {
   }
 
   render () {
-    const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
+
+  const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
   return (
     <div>
       <Section>
@@ -227,28 +252,34 @@ class Homes extends Component {
             return (
               <div key={i}>
                 <p>{h.title}</p>
-                {console.log(h)}
                 <button onClick={() => this.deleteHome(h.id)}>Delete</button>
                 <button onClick={() => this.showModal(h)}>Edit</button>
+                
               </div>
             )
           })
         }
-        <H1>Create Homes</H1>
-        <Form onSubmit={this.submit}>
-          <Input type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
-          <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
-          <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
-          <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
-          <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
-          <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
-          <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
-          <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
-          <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
-          <Input type="file" name="image" placeholder="image" onChange={this.onInputChange} />
-          <Submit>SUBMIT</Submit>
-        </Form>
-        {this.state.showEditModal ? <EditHome closeAndEdit={this.closeAndEdit} homeToEdit={this.state.homeToEdit} onInputEditChange={this.onInputEditChange}/> : null}
+      <H1>Create Home</H1>
+      <Form onSubmit={this.submit}>
+        <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
+        <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
+        <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
+        <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
+        <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
+        <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
+        <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
+        <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
+        <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
+        <Input type="file" name="image" placeholder="image"  onChange={this.onInputChange} />
+        <Submit>SUBMIT</Submit>
+      </Form>
+        {
+        this.state.showEditModal 
+        ? 
+        <EditHome closeAndEdit={this.closeAndEdit} homeToEdit={this.state.homeToEdit} onInputEditChange={this.onInputEditChange}/> 
+        :
+        null
+        }
       </Section>
     </div>
   )

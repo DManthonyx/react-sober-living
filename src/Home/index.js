@@ -6,8 +6,8 @@ class Home extends Component {
   render () {
   return (
     <div>
-      here
-      <button onClick={this.props.logout}></button>
+      home
+     
     </div>
     )
   }
