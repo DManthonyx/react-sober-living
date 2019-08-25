@@ -15,14 +15,6 @@ class SignUp extends Component {
     gender: '', 
   }
 
-  async componentDidMount() {
-    document.addEventListener('keydown', this.checkform())
-  }
-
-  async componentWillMount() {
-    document.removeEventListener('keydown', this.checkform())
-  }
-
   checkform = () => {
     const password = this.state.name
     const btn = document.querySelector('button')

@@ -3,9 +3,12 @@ import Hamburger from '../Hamburger';
 import {
   NavContainer,
   Nav,
+  Title,
   Overlay,
   OverlayContainer,
-  Link
+  Link,
+  Div,
+  Logout
 } from './style'
 
 const NavBar = ({ logged,id, logout }) => {
@@ -13,41 +16,52 @@ const NavBar = ({ logged,id, logout }) => {
   const notLoggedRoutes = ["home", "locations", "resources", "events", "signup", "login"]
   const [isOpen, setIsOpen ] = useState(false)
   window.onresize = ()=> (window.innerWidth > 900 && isOpen) && setIsOpen(false)
+  window.onClick = () => (setIsOpen(!isOpen))
   
   return (
     <NavContainer color={"white"}>
       <Nav>
+        <Title>SoberLiving</Title>
       {
         logged 
         ?
-        <div>
+        <Div>
         {
         isLoggedRoutes.map((route, i) =>
           route === "account" ?  <Link exact to={`/${route}/${id}`} key={i}>{route}</Link> :<Link exact to={`/${route}`} key={i}>{route}</Link>
           )
         }
-          <h1 onClick={logout}>logout</h1>
-        </div>
+          <Logout onClick={logout}>logout</Logout>
+        </Div>
           :
+        <Div>
+        {
         notLoggedRoutes.map((route, i) =>
           <Link exact to={`/${route}`} key={i}>{route}</Link>
         )
+        }
+        </Div>
       }
       <Hamburger setIsOpen={setIsOpen} isOpen={isOpen} />
       </Nav>
       <OverlayContainer className={isOpen ? "show" : "hide"}>
       <Overlay>
+      {
+        logged 
+        ?
+        <Div>
         {
-          logged 
-          ?
-          isLoggedRoutes.map((route, i) =>
-            <Link exact to={`/${route}`} key={i}>{route}</Link>
-          )
-          :
-          notLoggedRoutes.map((route, i) =>
-            <Link exact to={`/${route}`} key={i}>{route}</Link>
+        isLoggedRoutes.map((route, i) =>
+          route === "account" ?  <Link exact to={`/${route}/${id}`} key={i}>{route}</Link> :<Link exact to={`/${route}`} key={i}>{route}</Link>
           )
         }
+          <Logout onClick={logout}>logout</Logout>
+        </Div>
+          :
+        notLoggedRoutes.map((route, i) =>
+          <Link exact to={`/${route}`} key={i}>{route}</Link>
+        )
+      }
       </Overlay>
       </OverlayContainer>
     </NavContainer>

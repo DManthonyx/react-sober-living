@@ -6,7 +6,8 @@ import Resources from './Resources'
 
 import {
   Section,
-  H1
+  H1,
+  Name
 } from './style'
 
 class Admin extends Component {
@@ -14,7 +15,7 @@ class Admin extends Component {
   state = {
     users: []
   }
-  
+
   async componentDidMount() {
     this.getUsers();
   };
@@ -42,12 +43,14 @@ class Admin extends Component {
 
   render () {
     const { id } = this.props
-    console.log(id)
+    console.log(this.props, 'admin')
+
     const { users } = this.state
     const business = users.filter(u => u.user_type === 'business')
     const client = users.filter(u => u.user_type === 'client')
   return (
     <div>
+      <Name>{this.props.name}</Name>
       <Section>
         <H1>Homes</H1>
         <Homes id={id}/>

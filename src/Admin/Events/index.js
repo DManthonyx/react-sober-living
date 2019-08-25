@@ -22,6 +22,21 @@ class Events extends Component {
     image: '',
     phone_number: '',
     link: '',
+    error: {
+      city: '',
+      address: '',
+      longitude: '',
+      latitude: '',
+      name: '',
+      description: '',
+      image: '',
+      phone_number: '',
+      link: '',
+    },
+    showEditModal: false,
+    homeToEdit: {},
+    isOpen: false,
+    setIsOpen: false
   }
 
   async componentDidMount() {

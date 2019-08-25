@@ -1,35 +1,57 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import EditHome from '../EditHome'
-import CreateHome from '../CreateHome'
+
+
 
 import {
   Section,
   H1, 
   Form,
   Input,
-  Submit
+  Submit,
+  Small,
+  Div,
+  Button,
+  Image,
+  DetailDiv,
+  P,
+  DivCreate,
+  BtnCreateHome
 } from './style'
 
-const initialState = {
-  homes: [],
-  city: '',
-  address: '',
-  longitude: '',
-  latitude: '',
-  title: '',
-  image: '',
-  description: '',
-  phone_number: '',
-  email: '',
-  link: '',
-  showEditModal: false,
-  homeToEdit: {}
-}
+
 
 class Homes extends Component {
-
-  state = initialState 
+  state = {
+    homes: [],
+    city: '',
+    address: '',
+    longitude: '',  
+    latitude: '',
+    title: '',
+    image: '',
+    description: '',
+    phone_number: '',
+    email: '',
+    link: '',
+    error: {
+      city: '',
+      address: '',
+      longitude: '',
+      latitude: '',
+      title: '',
+      image: '',
+      description: '',
+      phone_number: '',
+      email: '',
+      link: '',
+    },
+    showEditModal: false,
+    homeToEdit: {},
+    isOpen: false,
+    setIsOpen: false
+  } 
 
   async componentDidMount () {
     this.getHomes()
@@ -116,32 +138,55 @@ class Homes extends Component {
     }
   }
 
+  validate = () => {
+    let cityError = '';
+    console.log(this.state.city.length)
+    if(this.state.city.length < 10) {
+      cityError = 'city error'
+    }
+    console.log(cityError,'city error')
+    if(cityError) {
+      this.setState({
+        error: {
+          city: cityError
+        }
+      })
+      return false
+    }
+
+    return true
+  };
+
   submit = async (e) => {
     e.preventDefault();
+    const isValid = this.validate();
+    if(isValid) {
+      console.log('is valid')
+      const data = new FormData();
+      data.append('city', this.state.city);
+      data.append('address', this.state.address);
+      data.append('longitude', this.state.longitude);
+      data.append('latitude', this.state.latitude);
+      data.append('title', this.state.title);
+      data.append('description', this.state.description);
+      data.append('link', this.state.link);
+      data.append('phone_number', this.state.phone_number);
+      data.append('email', this.state.email);
+      data.append('file', this.state.image);
+  
+  
+      const registerCall = this.createHome(data);
+  
+      registerCall.then((data) => {
+        console.log(data)
+          if(data.status.message === "Success") {
+            // tell the user they successfully added the house (you can use a message)
+          } else {
+            console.log(data, ' this should have an error message? How could you display that on the screen')
+          }
+      })
+    }
     
-    const data = new FormData();
-    data.append('city', this.state.city);
-    data.append('address', this.state.address);
-    data.append('longitude', this.state.longitude);
-    data.append('latitude', this.state.latitude);
-    data.append('title', this.state.title);
-    data.append('description', this.state.description);
-    data.append('link', this.state.link);
-    data.append('phone_number', this.state.phone_number);
-    data.append('email', this.state.email);
-    data.append('file', this.state.image);
-
-
-    const registerCall = this.createHome(data);
-
-    registerCall.then((data) => {
-      console.log(data)
-        if(data.status.message === "Success") {
-          // tell the user they successfully added the house (you can use a message)
-        } else {
-          console.log(data, ' this should have an error message? How could you display that on the screen')
-        }
-    })
   }
 
   deleteHome = async (id) => {
@@ -168,7 +213,7 @@ class Homes extends Component {
   showModal = (home) => {
     console.log(home, this.state.homeToEdit, 'showmodal')
     console.log({})
-    if(this.state.homeToEdit == {}) {
+    if(this.state.homeToEdit === {}) {
       this.setState({
         homeToEdit: home,
         showEditModal: true
@@ -241,27 +286,46 @@ class Homes extends Component {
     }
   }
 
+  switch = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+
   render () {
 
   const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
   return (
-    <div>
+    <Div>
       <Section>
         {
           homes.map((h, i) => {
             return (
-              <div key={i}>
-                <p>{h.title}</p>
-                <button onClick={() => this.deleteHome(h.id)}>Delete</button>
-                <button onClick={() => this.showModal(h)}>Edit</button>
-                
-              </div>
+              <Div key={i}>
+                <Image src="{'http://localhost:8000/profile_pics/' + this.props.userInfo.image}"/>
+                <DetailDiv>
+                  <P>{h.city}</P>
+                  <P>{h.address}</P>
+                  <P>{h.title}</P>
+                </DetailDiv>
+                <Button onClick={() => this.deleteHome(h.id)}>Delete</Button>
+                <Button onClick={() => this.showModal(h)}>Edit</Button>
+              </Div>
             )
           })
         }
+      {
+        this.state.isOpen
+        ?
+        null
+        :
+        <BtnCreateHome onClick={this.switch}>Add Home</BtnCreateHome>
+      }
+      <DivCreate className={this.state.isOpen ? "show" : "hide"} style={{position:'static',zIndex: 'auto'}} >
       <H1>Create Home</H1>
       <Form onSubmit={this.submit}>
         <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
+        <Small>{this.state.error.city}</Small>
         <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
         <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
         <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
@@ -273,6 +337,7 @@ class Homes extends Component {
         <Input type="file" name="image" placeholder="image"  onChange={this.onInputChange} />
         <Submit>SUBMIT</Submit>
       </Form>
+      </DivCreate>
         {
         this.state.showEditModal 
         ? 
@@ -281,7 +346,7 @@ class Homes extends Component {
         null
         }
       </Section>
-    </div>
+    </Div>
   )
   }
 }

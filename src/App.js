@@ -140,7 +140,7 @@ class App extends Component {
           {
             this.state.isLogged
             ?
-            <Route exact path='/account/:id' render={(props) =>  <Account {...props} user_type={this.state.user_type}/>} /> 
+            <Route exact path='/account/:id' render={(props) =>  <Account {...props} name={this.state.name} user_type={this.state.user_type}/>} /> 
             :
             <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           }
