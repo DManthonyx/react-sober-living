@@ -51,7 +51,7 @@ class Locations extends Component {
       <H1>Locations</H1>
       <Section>
         <Article>
-          <MapLocations  homes={this.state.homes}/>
+           <MapLocations  homes={this.state.homes}/> 
         </Article>
         <Article>
 
