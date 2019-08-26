@@ -15,15 +15,14 @@ import {
 export class MapContainer extends Component {
 
   render() {
-    console.log(process.env.REACT_APP_API_KEY)
     return (
-        <Map google={this.props.google} zoom={2}
+        <Map google={this.props.google} zoom={5}
         style={{width: '40%', height: '70%'}}>
         
         {
             this.props.homes.map((home, i) => {
                 return (
-                    <Marker 
+                    <Marker key={i}
                     position={{lat: home.latitude, lng: home.longitude}}
                     icon={{
                         anchor: new this.props.google.maps.Point(0,0),
