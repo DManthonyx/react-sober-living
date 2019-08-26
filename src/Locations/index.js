@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MapLocations from './MapLocations'
+import Map from './Map'
 
 import {
   Container,
@@ -51,7 +51,7 @@ class Locations extends Component {
       <H1>Locations</H1>
       <Section>
         <Article>
-           <MapLocations  homes={this.state.homes}/> 
+           <Map  homes={this.state.homes}/> 
         </Article>
         <Article>
 
