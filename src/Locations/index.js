@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
+import MapLocations from './MapLocations'
+
+import {
+  Section,
+  Form,
+  Input,
+  InputDiv,
+  Submit,
+  H1,
+  Small,
+  SmallDivs
+} from './style'
 
 class Locations extends Component {
 
   state = {
-    locations: []
+    homes: []
   }
 
   async componentDidMount() {
-    this.getLocations()
+    this.getHomes()
   };
 
-  getLocations = async () => {
+  getHomes = async () => {
     try {
       const getLocations = await fetch(`http://localhost:8000/home/`, {
         method: 'GET',
@@ -23,7 +35,7 @@ class Locations extends Component {
         const responseParsed = await getLocations.json()
         console.log(responseParsed.data)
         this.setState({
-          locations: responseParsed.data
+          homes: responseParsed.data
         })
       }
     } catch (err) {
@@ -33,9 +45,10 @@ class Locations extends Component {
 
   render() {
   return (
-    <div>
-      events
-    </div>
+    <Section>
+      <H1>Locations</H1>
+      <MapLocations  homes={this.state.homes}/>
+    </Section>
   )
   }
 }

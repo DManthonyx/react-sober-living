@@ -43,11 +43,8 @@ class Admin extends Component {
 
   render () {
     const { id } = this.props
-    console.log(this.props, 'admin')
-
     const { users } = this.state
     const business = users.filter(u => u.user_type === 'business')
-    const client = users.filter(u => u.user_type === 'client')
   return (
     <div>
       <Name>{this.props.name}</Name>
@@ -60,14 +57,6 @@ class Admin extends Component {
         {
          business.map((b,i) => {
           return <p key={i}>{b.name}</p>
-         })
-        }
-      </Section>
-      <Section>
-        <H1>Client</H1>
-        {
-         client.map((c,i) => {
-           return <p key={i}>{c.name}</p>
          })
         }
       </Section>

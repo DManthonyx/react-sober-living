@@ -1,5 +1,16 @@
-import React, { useState, Component } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+
+import {
+  Section,
+  Form,
+  Input,
+  InputDiv,
+  Submit,
+  H1,
+  Small,
+  SmallDiv
+} from './style'
 
 class SignUp extends Component {
   state = {
@@ -7,40 +18,78 @@ class SignUp extends Component {
     last_name: '',
     password: '',
     re_password: '',
-    user_type: '',
-    age: 0,
+    user_type: 'business',
     phone_number: '',
     email: '',
-    ethnicity: '',
-    gender: '', 
+    error: {
+      name: '', 
+      last_name: '',
+      password: '',
+      email: '',
+    }
   }
 
-  checkform = () => {
-    const password = this.state.name
-    const btn = document.querySelector('button')
-
-  }
-  
   onInputChange = (e) => { this.setState({ [e.target.name]: e.target.value }) 
+  };
+  
+
+  validate = () => {
+    if(
+      (this.state.name.length < 1) || 
+      (this.state.last_name.length < 1)
+      ) {
+      this.setState({
+        error: {
+          name: 'please fill out name, last name!!!'
+        }
+      })
+      return false
+    }
+    if(
+      (this.state.password !== this.state.re_password) || 
+      (this.state.password.length < 4) ||
+      (this.state.password.search(/[a-z]/) === -1) ||
+      (this.state.password.search(/[0-9]/) === -1) ||
+      (this.state.password.search(/[A-Z]/) === -1 )
+      ) {
+      this.setState({
+        error: {
+          password: 'passwords must match,length of 5 with a upper/lower case letter!!!' 
+        }
+      })
+      return false
+    }
+    if(
+      (this.state.email.search(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/) === -1) ||
+      (this.state.phone_number.length < 1)
+      ) {
+      this.setState({
+        error: {
+          email: 'email/phone number incorrect!!!'
+        }
+      })
+      return false
+    }
+
+    return true
   };
 
   submit = async (e) => {
     e.preventDefault();
-    
+
+    const isValid = this.validate();
+    console.log(this.validate(), this.state.error.name)
+    if(isValid) {
     const data = new FormData();
     data.append('name', this.state.name);
     data.append('last_name', this.state.last_name);
     data.append('password', this.state.password);
     data.append('re_password', this.state.re_password);
     data.append('user_type', this.state.user_type);
-    data.append('age', this.state.age);
     data.append('phone_number', this.state.phone_number);
     data.append('email', this.state.email);
-    data.append('ethnicity', this.state.ethnicity);
-    data.append('gender', this.state.gender);
 
     const registerCall = this.props.register(data);
-
     registerCall.then((data) => {
       console.log(data, 'this is data')
         if(data.status.message === "Success"){
@@ -49,37 +98,42 @@ class SignUp extends Component {
           console.log(data, ' this should have an error message? How could you display that on the screen')
         }
     })
+    }
     console.log(this.state)
   }
   
   render () {
 
     return (
-      <div>
-        <h1>SignUp</h1>
-        <form onSubmit={this.submit}>
-          <input className="name" type="text" placeholder="first name" name="name" onChange={this.onInputChange} />
-          <input className="last_name" type="text" placeholder="last name" name="last_name" onChange={this.onInputChange} />
-          <input className="password" type="password" placeholder="password" name="password" onChange={this.onInputChange} />
-          <input className="re_password" type="password" placeholder="re-password" name="re_password" onChange={this.onInputChange} />
-          <select className="user_type" name="user_type" onChange={this.onInputChange}>
-            <option>user type</option>
-            <option>business</option>
-            <option>client</option>
-            <option>admin</option>
-          </select>
-          <input className="age" type="number" name="age" placeholder="age" onChange={this.onInputChange} />
-          <input className="phone_number" type="text" name="phone_number" placeholder="phone number" onChange={this.onInputChange} />
-          <input className="email" type="email" name="email" placeholder="email" onChange={this.onInputChange} />
-          <input className="ethnicity" type="text" name="ethnicity" placeholder="ethnicity" onChange={this.onInputChange} />
-          <select className="gender" name ="gender" onChange={this.onInputChange}>
-            <option>gender</option>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
-          <button>SIGN UP</button>
-        </form>
-      </div>
+      <Section>
+        <H1>Create Account For your business</H1>
+        <Form onSubmit={this.submit}>
+          <InputDiv>
+          <Input className="name" type="text" placeholder="first name" name="name" onChange={this.onInputChange} />
+          <Input className="last_name" type="text" placeholder="last name" name="last_name" onChange={this.onInputChange} />
+          </InputDiv>
+          <SmallDiv>
+            <Small>{this.state.error.name}</Small>
+          </SmallDiv>
+          <InputDiv>
+          <Input className="password" type="password" placeholder="password" name="password" onChange={this.onInputChange} />
+          <Input className="re_password" type="password" placeholder="re-password" name="re_password" onChange={this.onInputChange} />
+          </InputDiv>
+          <SmallDiv>
+            <Small>{this.state.error.password}</Small>
+          </SmallDiv>
+          <InputDiv>
+          <Input className="email" type="text" name="email" placeholder="email" onChange={this.onInputChange} />
+          <Input className="phone_number" type="text" name="phone_number" placeholder="phone number" onChange={this.onInputChange} />
+          </InputDiv>
+          <SmallDiv>
+            <Small>{this.state.error.email}</Small>
+          </SmallDiv>
+          <InputDiv>
+          <Submit>SIGN UP</Submit>
+          </InputDiv>
+        </Form>
+      </Section>
     )
   }
 }

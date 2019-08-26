@@ -321,7 +321,7 @@ class Homes extends Component {
         :
         <BtnCreateHome onClick={this.switch}>Add Home</BtnCreateHome>
       }
-      <DivCreate className={this.state.isOpen ? "show" : "hide"} style={{position:'static',zIndex: 'auto'}} >
+      <DivCreate className={this.state.isOpen ? "show" : "hide"} >
       <H1>Create Home</H1>
       <Form onSubmit={this.submit}>
         <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />

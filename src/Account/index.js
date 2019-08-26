@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Admin from '../Admin'
 import UserBusiness from '../UserBusiness'
-import UserClient from '../UserClient'
+
 
 class Account extends Component {
   
@@ -10,9 +10,7 @@ class Account extends Component {
     let account;
     if (this.props.user_type === 'admin') {
       account = <Admin id={id} {...this.props}/>
-    } else if(this.props.user_type === 'client') {
-      account = <UserClient id={id}/>
-    } else {
+    }  else {
       account = <UserBusiness id={id}/>
     }
     console.log(this.props.user_type, 'this is account ')

@@ -4,11 +4,15 @@ import {
   NavContainer,
   Nav,
   Title,
+  DivTitle,
+  SubTitle,
   Overlay,
   OverlayContainer,
   Link,
   Div,
-  Logout
+  Logout,
+  DivSearch,
+  Search
 } from './style'
 
 const NavBar = ({ logged,id, logout }) => {
@@ -20,8 +24,14 @@ const NavBar = ({ logged,id, logout }) => {
   
   return (
     <NavContainer color={"white"}>
+      <DivSearch>
+        <Search  type="text" placeholder="Search for homes, resources, events"/>
+      </DivSearch>
       <Nav>
-        <Title>SoberLiving</Title>
+        <DivTitle>
+          <Title>SoberLiving</Title>
+          <SubTitle>GOD grant me the serenity</SubTitle>
+        </DivTitle>
       {
         logged 
         ?

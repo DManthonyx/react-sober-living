@@ -20,10 +20,26 @@ export const Nav = styled.div`
 
 export const Title = styled.h1`
   width: 50%;
-  padding: 3px 7px;
+  color: #A8E0FF;
+  padding: 7px 7px 0px;
+  margin: 0px;
+  position: relative;
+  bottom: 19px;
   font-size: 3em;
   letter-spacing: 2px;
   font-family: 'Cinzel Decorative', cursive;
+`
+
+export const DivTitle = styled.div`
+  width: 50%;
+`
+export const SubTitle = styled.small`
+  padding: 7px 7px 0px;
+  font-weight: bold;
+  position: relative;
+  bottom: 28px;
+  font-size: 1.2em;
+  letter-spacing: 3px;
 `
 
 export const Logout = styled(NavLink)`
@@ -38,17 +54,18 @@ export const Link = styled(NavLink)`
   display:inline-block;
   text-decoration: none;
   text-transform: uppercase;
-  color: black;
+  color: #2D3142;
   height: 29px;
-  margin: 20px 11px 0px;
+  font-size: 1.1em;
+  margin: 10px 11px 0px;
   &:hover {
     color: lightblue;
   }
 
   &.active{
     border-bottom: 1px solid black;
-    color: gray;
-    font-weight: bold;
+    color: #A8E0FF
+    font-weight: bolder;
     height: 29px;
     position: relative;
     transform: scale(1.3);
@@ -85,4 +102,18 @@ export const Overlay = styled.div`
 export const Div = styled.div`
   width: 50%;
   text-align: right;
+`
+
+export const DivSearch = styled.div`
+  text-align: right;
+`
+
+export const Search = styled.input`
+text-align: center;
+margin: 3px;
+width: 26%;
+border: 1px solid #A8E0FF;
+border-radius: 3px;
+height: 30px;
+padding: 3px
 `
