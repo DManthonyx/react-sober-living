@@ -90,13 +90,14 @@ class Home extends Component {
   }
 
   render () {
-    console.log(this.state)
+    console.log(this.state.homes, 'this is homes')
     console.log('this is state')
+    // <Img src={this.state.homes[0] && `http://localhost:8000/profile_pics/${this.state.homes[0].image}`}/>
   return (
     <Section>
       <Container>
       <DivImgBox>
-        <Img src="https://i.imgur.com/UZldlfV.jpg"/>
+        <Img src={"https://i.imgur.com/8dHzvdg.jpg"}/>
         <Div>
           <DivContent>
             <H2>West Covina, Ca</H2>
@@ -105,7 +106,7 @@ class Home extends Component {
         </Div>
       </DivImgBox>
       <DivImgBox>
-        <Img src="https://i.imgur.com/Eq61Y1j.jpg"/>
+        <Img src="https://i.imgur.com/J4rVNH5.jpg"/>
         <Div>
           <DivContent>
             <H2>Los, Angeles</H2>

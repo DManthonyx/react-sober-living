@@ -38,7 +38,6 @@ export const H1 = styled.h1`
   font-family: 'Libre Caslon Display', serif;
   text-align: center;
   margin-top: 30px
-  
 `
 
 export const SmallDiv = styled.div`

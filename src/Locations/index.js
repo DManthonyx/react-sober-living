@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import MapLocations from './MapLocations'
 
 import {
+  Container,
   Section,
+  Article,
   Form,
   Input,
   InputDiv,
@@ -45,10 +47,20 @@ class Locations extends Component {
 
   render() {
   return (
-    <Section>
+    <Container>
       <H1>Locations</H1>
-      <MapLocations  homes={this.state.homes}/>
-    </Section>
+      <Section>
+        <Article>
+          <MapLocations  homes={this.state.homes}/>
+        </Article>
+        <Article>
+
+        </Article>
+      </Section>
+      <Section>
+
+      </Section>
+    </Container>
   )
   }
 }

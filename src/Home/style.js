@@ -5,8 +5,8 @@ export const Section = styled.div`
   justify-content: space-evenly;
 `
 export const DivImgBox = styled.div`
-  width: 37%;
-  height: 300px;
+  width: 46%;
+  height: 361px;
   margin: 0 auto;
   position: relative;
   &:hover Img {
@@ -20,12 +20,12 @@ export const Img = styled.img`
   opacity: 1;
   display: block;
   width: 100%;
-  height: 300px;
+  height: 361px;
   transition: 1s ease;
 `
 export const Div = styled.div`
   opacity: 0;
-  transition: 1s ease;
+  transition: .5s ease;
 `
 export const DivContent = styled.div`
   position: absolute;
@@ -38,7 +38,7 @@ export const DivContent = styled.div`
   letter-spacing: 2px;
 `
 export const H2 = styled.h2`
-
+  font-family: 'Cinzel Decorative', cursive;
 `
 export const Button = styled.button`
   display: block;
@@ -53,10 +53,16 @@ export const Button = styled.button`
   height: 50px;
   font-family: beautiful;
   cursor: pointer;
+  &:hover {
+    background: black;
+    color: #A8E0FF;
+  }
+  
 `
 export const Container = styled.div`
   display: flex;
   width: 99%;
   border-top: 3px solid gray;
-  padding-top: 11px;
+  border-bottom: 3px solid gray;
+  padding: 11px 0px;
 `
