@@ -26,7 +26,7 @@ class Locations extends Component {
 
   getHomes = async () => {
     try {
-      const getLocations = await fetch(`http://localhost:8000/home/`, {
+      const getLocations = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {

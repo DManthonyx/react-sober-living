@@ -37,7 +37,7 @@ class Resources extends Component {
 
   getResources = async () => {
     try {
-      const getResources = await fetch(`http://localhost:8000/resource/`, {
+      const getResources = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resource/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -58,7 +58,7 @@ class Resources extends Component {
 
   createResource = async (data) => {
     try {
-      const createResource = await fetch(`http://localhost:8000/resource/`, {
+      const createResource = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resource/`, {
         method: 'POST',
         credentials: 'include',
         body: data,

@@ -53,7 +53,7 @@ class Events extends Component {
 
   getEvents = async () => {
     try {
-      const getEvents = await fetch(`http://localhost:8000/event/`, {
+      const getEvents = await fetch(`${process.env.REACT_APP_BACKEND_URL}/event/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -74,7 +74,7 @@ class Events extends Component {
 
   createEvent = async (data) => {
     try {
-      const createEvent = await fetch(`http://localhost:8000/event/`, {
+      const createEvent = await fetch(`${process.env.REACT_APP_BACKEND_URL}/event/`, {
         method: 'POST',
         credentials: 'include',
         body: data,

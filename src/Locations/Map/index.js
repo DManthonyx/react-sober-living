@@ -15,6 +15,7 @@ import {
 export class MapContainer extends Component {
 
   render() {
+    console.log(this.props.homes)
     return (
         <Map google={this.props.google} zoom={5}
         style={{width: '40%', height: '70%'}}>

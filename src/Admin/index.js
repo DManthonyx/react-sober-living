@@ -22,7 +22,7 @@ class Admin extends Component {
 
   getUsers = async () => {
     try {
-      const getUsers = await fetch(`http://localhost:8000/user/`, {
+      const getUsers = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {

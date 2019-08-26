@@ -24,8 +24,8 @@ export const Title = styled.h1`
   padding: 7px 7px 0px;
   margin: 0px;
   position: relative;
-  bottom: 19px;
-  font-size: 3em;
+  bottom: 34px;
+  font-size: 4em;
   letter-spacing: 2px;
   font-family: 'Cinzel Decorative', cursive;
 `
@@ -37,8 +37,8 @@ export const SubTitle = styled.small`
   padding: 7px 7px 0px;
   font-weight: bold;
   position: relative;
-  bottom: 28px;
-  font-size: 1.2em;
+  bottom: 40px;
+  font-size: 1.4em;
   letter-spacing: 3px;
 `
 
@@ -50,7 +50,7 @@ font-size: 15px;
 
 `
 
-export const Link = styled(NavLink)`
+export const LinkRoute = styled(NavLink)`
   display:inline-block;
   text-decoration: none;
   text-transform: uppercase;
@@ -116,4 +116,11 @@ border: 1px solid #A8E0FF;
 border-radius: 3px;
 height: 30px;
 padding: 3px
+`
+
+export const SearchForm = styled.form`
+`
+
+export const SearchButton = styled.button`
+  display: none;
 `

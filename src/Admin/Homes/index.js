@@ -59,7 +59,7 @@ class Homes extends Component {
 
   getHomes = async () => {
     try {
-      const getHomes = await fetch(`http://localhost:8000/home/`, {
+      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -106,7 +106,7 @@ class Homes extends Component {
 
   createHome = async (data) => {
     try {
-      const createHome = await fetch(`http://localhost:8000/home/${this.props.id}/createhome`, {
+      const createHome = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/${this.props.id}/createhome`, {
         method: 'POST',
         credentials: 'include',
         body: data,
@@ -192,7 +192,7 @@ class Homes extends Component {
   deleteHome = async (id) => {
     console.log(id, ' delete home ID')
     try {
-      const deleteHome = await fetch(`http://localhost:8000/home/${id}/delete`, {
+      const deleteHome = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/${id}/delete`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -211,15 +211,12 @@ class Homes extends Component {
   }
 
   showModal = (home) => {
-    console.log(home, this.state.homeToEdit, 'showmodal')
-    console.log({})
     if(this.state.homeToEdit === {}) {
       this.setState({
         homeToEdit: home,
         showEditModal: true
       }) 
-      console.log(this.homeToEdit, 'home edit')
-     
+
     } else if (home.id === this.state.homeToEdit.id) {
       this.setState({
         homeToEdit: home,
@@ -247,7 +244,7 @@ class Homes extends Component {
     data.append('email', this.state.homeToEdit.email);
     data.append('file', this.state.homeToEdit.image);
     try {
-      const editRequest = await fetch(`http://localhost:8000/home/${this.state.homeToEdit.id}/edit`, {
+      const editRequest = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/${this.state.homeToEdit.id}/edit`, {
         method: 'PUT',
         credentials: 'include',
         body: data,
@@ -302,7 +299,7 @@ class Homes extends Component {
           homes.map((h, i) => {
             return (
               <Div key={i}>
-                <Image src="{'http://localhost:8000/profile_pics/' + this.props.userInfo.image}"/>
+                <Image src="{'${process.env.REACT_APP_BACKEND_URL}/profile_pics/' + this.props.userInfo.image}"/>
                 <DetailDiv>
                   <P>{h.city}</P>
                   <P>{h.address}</P>

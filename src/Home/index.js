@@ -28,7 +28,7 @@ class Home extends Component {
 
   getHomes = async () => {
     try {
-      const getHomes = await fetch(`http://localhost:8000/home/`, {
+      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -37,7 +37,6 @@ class Home extends Component {
       })
       if(getHomes.ok) {
         const responseParsed = await getHomes.json()
-        console.log(responseParsed.data)
         this.setState({
           homes: responseParsed.data
         })
@@ -49,7 +48,7 @@ class Home extends Component {
 
   getEvents = async () => {
     try {
-      const getEvents = await fetch(`http://localhost:8000/event/`, {
+      const getEvents = await fetch(`${process.env.REACT_APP_BACKEND_URL}/event/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -58,7 +57,6 @@ class Home extends Component {
       })
       if(getEvents.ok) {
         const responseParsed = await getEvents.json()
-        console.log(responseParsed.data)
         this.setState({
           events: responseParsed.data
         })
@@ -70,7 +68,7 @@ class Home extends Component {
 
   getResources = async () => {
     try {
-      const getResources = await fetch(`http://localhost:8000/resource/`, {
+      const getResources = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resource/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -79,7 +77,6 @@ class Home extends Component {
       })
       if(getResources.ok) {
         const responseParsed = await getResources.json()
-        console.log(responseParsed.data)
         this.setState({
           resources: responseParsed.data
         })
@@ -90,9 +87,10 @@ class Home extends Component {
   }
 
   render () {
-    console.log(this.state.homes, 'this is homes')
-    console.log('this is state')
-    // <Img src={this.state.homes[0] && `http://localhost:8000/profile_pics/${this.state.homes[0].image}`}/>
+    console.log(this.state.homes, 'this is homes, home page')
+    console.log(this.state.events,'this is events, home page')
+    console.log(this.state.resources,'this is resources, home page')
+    // <Img src={this.state.homes[0] && `${process.env.REACT_APP_BACKEND_URL}/profile_pics/${this.state.homes[0].image}`}/>
   return (
     <Section>
       <Container>

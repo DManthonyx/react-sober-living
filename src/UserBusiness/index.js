@@ -34,7 +34,7 @@ class UserBusiness extends Component {
 
   getHomes = async () => {
     try {
-      const getHomes = await fetch(`http://localhost:8000/home/${this.props.id}/user`, {
+      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/home/${this.props.id}/user`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {
@@ -81,7 +81,7 @@ class UserBusiness extends Component {
 
   createHome = async (data) => {
     try {
-      const createHome = await fetch(`http://localhost:8000/home/${this.props.id}/createhome`, {
+      const createHome = await fetch(`${process.env.REACT_APP_BACKEND_URL}/home/${this.props.id}/createhome`, {
         method: 'POST',
         credentials: 'include',
         body: data,
@@ -143,7 +143,7 @@ class UserBusiness extends Component {
   deleteHome = async (id) => {
     console.log(id, ' delete home ID')
     try {
-      const deleteHome = await fetch(`http://localhost:8000/home/${id}/delete`, {
+      const deleteHome = await fetch(`${process.env.REACT_APP_BACKEND_URL}/home/${id}/delete`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -183,7 +183,7 @@ class UserBusiness extends Component {
     data.append('file', this.state.homeToEdit.image);
     try {
       console.log(this.state.homeToEdit)
-      const editRequest = await fetch(`http://localhost:8000/home/${this.state.homeToEdit.id}/edit`, {
+      const editRequest = await fetch(`${process.env.REACT_APP_BACKEND_URL}/home/${this.state.homeToEdit.id}/edit`, {
         method: 'PUT',
         credentials: 'include',
         body: data,

@@ -13,7 +13,7 @@ class Resource extends Component {
   
   getResources = async () => {
     try {
-      const getResources = await fetch(`http://localhost:8000/resource/`, {
+      const getResources = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resource/`, {
         method: 'GET',
         credentials: 'include',// on every request we have to send the cookie
         headers: {

@@ -25,17 +25,12 @@ class App extends Component {
     id:'',
     user_type: '',
     loading: false,
-    homes: [],
     isLogged: false
   }
 
-  async componentDidMount() {
-    this.getHomes()
-  };
-
   register = async (data) => {
     try {
-      const registerResponse = await fetch(`http://localhost:8000/user/signup`, {
+      const registerResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, {
         method: 'POST',
         credentials: 'include',
         body: data,
@@ -58,7 +53,7 @@ class App extends Component {
 
   login = async (loginInfo) => {
     try {
-      const loginResponse = await fetch(`http://localhost:8000/user/login`, {
+      const loginResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
         method: 'POST',
         credentials: 'include',// on every request we have to send the cookie
         body: JSON.stringify(loginInfo),
@@ -86,7 +81,7 @@ class App extends Component {
 
   logout = async () => {
     try {
-      const loginResponse = await fetch(`http://localhost:8000/user/logout`, {
+      const loginResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/logout`, {
         method: 'GET',
         credentials: 'include',
       })
@@ -102,28 +97,6 @@ class App extends Component {
       console.log(err)
     }
   }
-
-  getHomes = async () => {
-    try {
-      const getHomes = await fetch(`http://localhost:8000/home/`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(getHomes.ok) {
-        const responseParsed = await getHomes.json()
-        console.log(responseParsed.data)
-        this.setState({
-          homes: responseParsed.data
-        })
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
 
   render () {
     console.log(this.state)
