@@ -64,8 +64,8 @@ export const LinkRoute = styled(NavLink)`
 
   &.active{
     border-bottom: 1px solid black;
-    color: #A8E0FF
-    font-weight: bolder;
+    color: #A8E0FF;
+    font-weight: bold;
     height: 29px;
     position: relative;
     transform: scale(1.3);

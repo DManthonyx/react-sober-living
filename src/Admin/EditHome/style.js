@@ -19,3 +19,7 @@ export const Input = styled.input`
 export const H1 = styled.h1`
 
 `
+
+export const Cancel = styled.p`
+
+`

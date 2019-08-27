@@ -20,7 +20,7 @@ export const Submit = styled.button`
 
 export const Input = styled.input`
   width: 48%;
-  text-align: center
+  text-align: center;
   height: 34px;
   border: 1px solid;
   border-radius: 2px;

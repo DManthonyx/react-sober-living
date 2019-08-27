@@ -2,13 +2,12 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react';
 import {
   Section,
-  Form,
-  Input,
-  InputDiv,
-  Submit,
   H1,
-  Small,
-  SmallDiv
+  Div,
+  HomeDiv,
+  InfoDiv,
+  P,
+  CurrentHome
 } from './style'
 
  
@@ -17,6 +16,7 @@ export class MapContainer extends Component {
   render() {
     console.log(this.props.homes)
     return (
+        <Section>
         <Map google={this.props.google} zoom={5}
         style={{width: '40%', height: '70%'}}>
         
@@ -26,6 +26,7 @@ export class MapContainer extends Component {
                     <Marker key={i}
                     position={{lat: home.latitude, lng: home.longitude}}
                     icon={{
+                        url: 'this is url',
                         anchor: new this.props.google.maps.Point(0,0),
                         scaledSize: new this.props.google.maps.Size(25,25)
                     }}
@@ -35,11 +36,9 @@ export class MapContainer extends Component {
         }
  
         <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>location</h1>
-            </div>
         </InfoWindow>
         </Map>
+      </Section>
     );
   }
 }

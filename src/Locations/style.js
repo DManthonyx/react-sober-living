@@ -24,3 +24,18 @@ export const H1 = styled.h1`
   letter-spacing: 2px;
   margin: 10px 0px
 `
+
+export const HomeDiv = styled.div`
+`
+
+export const InfoDiv = styled.div`
+`
+
+export const CurrentHome = styled.div`
+`
+
+export const Div = styled.div`
+`
+
+export const P = styled.p`
+`

@@ -4,7 +4,8 @@ import {
   Form,
   Input,
   Submit,
-  H1
+  H1,
+  Cancel
 } from './style'
 
 const EditHome = (props) =>  {
@@ -23,6 +24,7 @@ const EditHome = (props) =>  {
         <Input type="text" name="link" placeholder="link to website" value={props.homeToEdit.link} onChange={props.onInputEditChange} />
         <Input type="file" name="image" placeholder="image"  onChange={props.onInputEditChange} />
         <Submit>SUBMIT</Submit>
+        <Cancel onClick={props.switchEdit}>Cancel</Cancel>
       </Form>
     </Section>
     )

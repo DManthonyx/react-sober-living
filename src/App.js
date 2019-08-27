@@ -3,8 +3,6 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import NavBar from './NavBar';
 import Home from './Home';
 import SignUp from './SignUp';
-import Resources from './Resources';
-import Events from './Events';
 import Locations from './Locations';
 import LogIn from './LogIn';
 import Account from './Account'
@@ -55,7 +53,7 @@ class App extends Component {
     try {
       const loginResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
         method: 'POST',
-        credentials: 'include',// on every request we have to send the cookie
+        credentials: 'include',
         body: JSON.stringify(loginInfo),
         headers: {
           'Content-Type': 'application/json'
@@ -100,7 +98,6 @@ class App extends Component {
 
   render () {
     console.log(this.state)
-    
     return (
       <div>
         <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout}/>
@@ -108,8 +105,6 @@ class App extends Component {
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/locations' render={(props) =>  <Locations {...props} />} />
-          <Route exact path='/resources' render={(props) =>  <Resources {...props} />} />
-          <Route exact path='/events' render={(props) =>  <Events {...props} />} /> 
           {
             this.state.isLogged
             ?

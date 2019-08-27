@@ -5,13 +5,12 @@ import {
   Container,
   Section,
   Article,
-  Form,
-  Input,
-  InputDiv,
-  Submit,
   H1,
-  Small,
-  SmallDivs
+  Div,
+  HomeDiv,
+  InfoDiv,
+  P,
+  CurrentHome
 } from './style'
 
 class Locations extends Component {
@@ -28,14 +27,13 @@ class Locations extends Component {
     try {
       const getLocations = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
         method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
       })
       if(getLocations.ok) {
         const responseParsed = await getLocations.json()
-        console.log(responseParsed.data)
         this.setState({
           homes: responseParsed.data
         })
@@ -54,7 +52,24 @@ class Locations extends Component {
            <Map  homes={this.state.homes}/> 
         </Article>
         <Article>
+        <Div>
+            <CurrentHome>
 
+            </CurrentHome>
+            <HomeDiv>
+                {
+                  this.state.homes.map((home,i) => {
+                    return (
+                      <InfoDiv key={i}>
+                        <P>Title:  {home.title}</P>
+                        <P>City:  {home.city}</P>
+                        <P>Adress:  {home.address}</P>
+                      </InfoDiv>
+                    )
+                  })
+                }
+            </HomeDiv>
+            </Div>
         </Article>
       </Section>
       <Section>

@@ -23,15 +23,10 @@ class NavBar extends Component {
     isOpen: false,
     setIsOpen: false,
     homes: [],
-    resources: [],
-    events: [],
-
   }
 
   async componentDidMount () {
     this.getHomes()
-    this.getEvents()
-    this.getResources()
   }
 
   getHomes = async () => {
@@ -54,45 +49,6 @@ class NavBar extends Component {
     }
   }
 
-  getEvents = async () => {
-    try {
-      const getEvents = await fetch(`${process.env.REACT_APP_BACKEND_URL}/event/`, {
-        method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(getEvents.ok) {
-        const responseParsed = await getEvents.json()
-        this.setState({
-          events: responseParsed.data
-        })
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  getResources = async () => {
-    try {
-      const getResources = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resource/`, {
-        method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
-        headers: {
-          'Content-Type': 'application/json'
-      }
-      })
-      if(getResources.ok) {
-        const responseParsed = await getResources.json()
-        this.setState({
-          resources: responseParsed.data
-        })
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
   filter = e => {
     e.preventDefault()
     
@@ -105,14 +61,14 @@ class NavBar extends Component {
     const { isOpen, setIsOpen } = this.state
     window.onresize = ()=> (window.innerWidth > 900 && isOpen) && setIsOpen(false)
     window.onClick = () => (setIsOpen(!isOpen))
-    const isLoggedRoutes = ["home", "locations", "resources", "events", "account"];
-    const notLoggedRoutes = ["home", "locations", "resources", "events", "signup", "login"];
+    const isLoggedRoutes = ["home", "locations", "account"];
+    const notLoggedRoutes = ["home", "locations", "signup", "login"];
     const { logged,id, logout } = this.props
   return (
     <NavContainer color={"white"}>
       <DivSearch>
         <SearchForm onSubmit={this.filter} >
-          <Search className="filter" type="text" placeholder="Search for homes, resources, events"/>
+          <Search className="filter" type="text" placeholder="Search for homes...."/>
           <SearchButton></SearchButton>
         </SearchForm>
       </DivSearch>

@@ -32,7 +32,6 @@ class SignUp extends Component {
   onInputChange = (e) => { this.setState({ [e.target.name]: e.target.value }) 
   };
   
-
   validate = () => {
     if(
       (this.state.name.length < 1) || 
@@ -78,7 +77,6 @@ class SignUp extends Component {
     e.preventDefault();
 
     const isValid = this.validate();
-    console.log(this.validate(), this.state.error.name)
     if(isValid) {
     const data = new FormData();
     data.append('name', this.state.name);
@@ -91,7 +89,6 @@ class SignUp extends Component {
 
     const registerCall = this.props.register(data);
     registerCall.then((data) => {
-      console.log(data, 'this is data')
         if(data.status.message === "Success"){
           this.props.history.push(`/account/${data.data.id}`)
         } else {
@@ -99,7 +96,6 @@ class SignUp extends Component {
         }
     })
     }
-    console.log(this.state)
   }
   
   render () {

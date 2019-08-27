@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
 import Homes from './Homes'
-import Events from './Events'
-import Resources from './Resources'
 
 import {
   Section,
   H1,
-  Name
+  Name,
+  Div,
+  P,
+  Button,
+  BusinessDiv
 } from './style'
 
 class Admin extends Component {
 
   state = {
-    users: []
+    users: [],
   }
 
   async componentDidMount() {
@@ -24,7 +26,7 @@ class Admin extends Component {
     try {
       const getUsers = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/`, {
         method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -41,38 +43,53 @@ class Admin extends Component {
     }
   }
 
+  deleteUser = async (id) => {
+    try {
+      const deleteUser = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${id}/delete`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if(deleteUser.status !== 200){
+        throw Error('Something happend on delete')
+      }
+      const deleteUserJson = await deleteUser.json();
+      this.setState({
+        users: this.state.users.filter((user) => user.id !== id)
+      })
+    } catch(err){
+      console.log(err);
+      return err
+    }
+  }
+
   render () {
     const { id } = this.props
     const { users } = this.state
     const business = users.filter(u => u.user_type === 'business')
   return (
     <div>
-      <Name>{this.props.name}</Name>
+      <Name>ADMIN {this.props.name}</Name>
       <Section>
         <H1>Homes</H1>
         <Homes id={id}/>
       </Section>
       <Section>
         <H1>Business</H1>
-        {
-         business.map((b,i) => {
-          return <p key={i}>{b.name}</p>
-         })
-        }
-      </Section>
-      <Section>
-        <H1>Events</H1>
-
-        <Events id={id}/>
-      </Section>
-      <Section>
-        <H1>Resources</H1>
-
-        <Resources id={id}/>
+        <BusinessDiv>
+          {
+          business.map((b,i) => {
+            return (
+              <Div key={i}>
+                <P key={i}>{b.name}</P>
+                <Button onClick={() => this.deleteUser(b.id)}>Delete</Button>
+              </Div>
+            )
+          })
+          }
+        </BusinessDiv>
       </Section>
     </div>
   )
   }
 }
-
 export default Admin

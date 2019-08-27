@@ -9,7 +9,11 @@ import {
   Submit,
   H1,
   Small,
-  SmallDiv
+  SmallDiv,
+  CreateAccount,
+  Label,
+  ButtonDiv
+
 } from './style'
 
 class LogIn extends Component {
@@ -23,7 +27,6 @@ class LogIn extends Component {
   };
 
   validate = () => {
-    console.log(this.state.email.search(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/), 'name search')
     if(
       (this.state.password.length < 4) ||
       (this.state.password.search(/[a-z]/) === -1) ||
@@ -47,7 +50,6 @@ class LogIn extends Component {
     const login = this.props.login(this.state)
     login.then((data) => {
       if(data.status.message === 'Success'){
-        console.log(data, 'this is login data')
         this.props.history.push(`/account/${data.data.id}`)
       } else {
         console.log(data, this.props)
@@ -58,21 +60,30 @@ class LogIn extends Component {
     }
   }
 
+  goCreateAccount = () => {
+    this.props.history.push(`/signup`)
+  }
+
   render () {
     return (
       <Section>
         <H1>Log In</H1>
         <Form onSubmit={this.submitLogIn}>
           <InputDiv>
-            <Input type="text" name="email" value={this.state.email} placeholder="email" onChange={this.onInputChange} />
+            <Label>Email:</Label>
+            <Input type="text" name="email" value={this.state.email} placeholder="   email" onChange={this.onInputChange} />
           </InputDiv>
           <InputDiv>
-            <Input type="password" name="password" value={this.state.password} placeholder="password" onChange={this.onInputChange} />
+            <Label>Password:</Label>
+            <Input type="password" name="password" value={this.state.password} placeholder="   password" onChange={this.onInputChange} />
           </InputDiv>
             <SmallDiv>
               <Small>{this.state.error}</Small>
             </SmallDiv>
-          <Submit>Log In</Submit>
+          <ButtonDiv>
+            <Submit>Log In</Submit>
+            <CreateAccount onClick={this.goCreateAccount}>Create Account</CreateAccount>
+          </ButtonDiv>
         </Form>
       </Section>
     )

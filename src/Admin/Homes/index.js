@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import EditHome from '../EditHome'
 
-
-
 import {
   Section,
   H1, 
@@ -17,7 +15,11 @@ import {
   DetailDiv,
   P,
   DivCreate,
-  BtnCreateHome
+  BtnCreateHome,
+  HomeDiv,
+  Cancel,
+  SectionHome,
+  SectionChange,
 } from './style'
 
 
@@ -61,14 +63,13 @@ class Homes extends Component {
     try {
       const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
         method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
       })
       if(getHomes.ok) {
         const responseParsed = await getHomes.json()
-        console.log(responseParsed.data)
         this.setState({
           homes: responseParsed.data
         })
@@ -115,7 +116,6 @@ class Homes extends Component {
         }
       })
       const response = await createHome.json();
-      console.log(response)
       this.setState({
         homes: [...this.state.homes, response.data],
         city: '',
@@ -131,7 +131,6 @@ class Homes extends Component {
         showEditModal: false,
         homeToEdit: {}
       })
-      console.log(this.state)
       return response;
     } catch (err) {
       console.log(err)
@@ -140,11 +139,9 @@ class Homes extends Component {
 
   validate = () => {
     let cityError = '';
-    console.log(this.state.city.length)
-    if(this.state.city.length < 10) {
+    if(this.state.city.length < 3) {
       cityError = 'city error'
     }
-    console.log(cityError,'city error')
     if(cityError) {
       this.setState({
         error: {
@@ -161,7 +158,6 @@ class Homes extends Component {
     e.preventDefault();
     const isValid = this.validate();
     if(isValid) {
-      console.log('is valid')
       const data = new FormData();
       data.append('city', this.state.city);
       data.append('address', this.state.address);
@@ -176,11 +172,13 @@ class Homes extends Component {
   
   
       const registerCall = this.createHome(data);
+      this.setState({
+        isOpen: !this.state.isOpen
+      })
   
       registerCall.then((data) => {
-        console.log(data)
           if(data.status.message === "Success") {
-            // tell the user they successfully added the house (you can use a message)
+            console.log('added house')
           } else {
             console.log(data, ' this should have an error message? How could you display that on the screen')
           }
@@ -190,7 +188,6 @@ class Homes extends Component {
   }
 
   deleteHome = async (id) => {
-    console.log(id, ' delete home ID')
     try {
       const deleteHome = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/${id}/delete`, {
         method: 'DELETE',
@@ -199,7 +196,6 @@ class Homes extends Component {
       if(deleteHome.status !== 200){
         throw Error('Something happend on delete')
       }
-      // this object is the actual response from the api
       const deleteHomeJson = await deleteHome.json();
       this.setState({
         homes: this.state.homes.filter((home) => home.id !== id)
@@ -256,27 +252,17 @@ class Homes extends Component {
         throw Error('editResquest not working')
       }
       const editResponse = await editRequest.json();
-      console.log(this.state.homes, 'homes')
-      console.log(editResponse.data, 'edit response')
-      console.log()
       const editedHomeArray = this.state.homes.map((home) => {
-        // remember map creates a brand new array
         if(home.id === editResponse.data.id){
-        // comparing every movie in the array, the
-        // movie we edited
-        // and if they match update the movie with response
-        // data from the api
           home = editResponse.data
         }
         return home
       });
-    
-      console.log(editedHomeArray, 'edited home array')
+  
       this.setState({
         homes: editedHomeArray,
-        showEditModal: false
+        showEditModal: false,
       })
-      console.log(editResponse, ' editResponse');
     } catch(err){
       console.log(err, ' error closeAndEdit');
       return err
@@ -289,28 +275,16 @@ class Homes extends Component {
     })
   }
 
-  render () {
+  switchEdit = () => {
+    this.setState({
+    showEditModal: false
+    })
+  }
 
+  render () {
   const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
   return (
     <Div>
-      <Section>
-        {
-          homes.map((h, i) => {
-            return (
-              <Div key={i}>
-                <Image src="{'${process.env.REACT_APP_BACKEND_URL}/profile_pics/' + this.props.userInfo.image}"/>
-                <DetailDiv>
-                  <P>{h.city}</P>
-                  <P>{h.address}</P>
-                  <P>{h.title}</P>
-                </DetailDiv>
-                <Button onClick={() => this.deleteHome(h.id)}>Delete</Button>
-                <Button onClick={() => this.showModal(h)}>Edit</Button>
-              </Div>
-            )
-          })
-        }
       {
         this.state.isOpen
         ?
@@ -318,6 +292,24 @@ class Homes extends Component {
         :
         <BtnCreateHome onClick={this.switch}>Add Home</BtnCreateHome>
       }
+      <SectionHome>
+        {
+          homes.map((h, i) => {
+            return (
+              <HomeDiv key={i}>
+                <DetailDiv>
+                  <P>Title:  {h.title}</P>
+                  <P>City:  {h.city}</P>
+                  <P>Adress:  {h.address}</P>
+                </DetailDiv>
+                <Button onClick={() => this.deleteHome(h.id)}>Delete</Button>
+                <Button onClick={() => this.showModal(h)}>Edit</Button>
+              </HomeDiv>
+            )
+          })
+        }
+      </SectionHome>
+      <SectionChange>
       <DivCreate className={this.state.isOpen ? "show" : "hide"} >
       <H1>Create Home</H1>
       <Form onSubmit={this.submit}>
@@ -333,16 +325,17 @@ class Homes extends Component {
         <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
         <Input type="file" name="image" placeholder="image"  onChange={this.onInputChange} />
         <Submit>SUBMIT</Submit>
+        <Cancel onClick={this.switch}>Cancel</Cancel>
       </Form>
       </DivCreate>
         {
         this.state.showEditModal 
-        ? 
-        <EditHome closeAndEdit={this.closeAndEdit} homeToEdit={this.state.homeToEdit} onInputEditChange={this.onInputEditChange}/> 
+        ?
+        <EditHome switchEdit={this.switchEdit} closeAndEdit={this.closeAndEdit} homeToEdit={this.state.homeToEdit} onInputEditChange={this.onInputEditChange}/> 
         :
         null
         }
-      </Section>
+      </SectionChange>
     </Div>
   )
   }

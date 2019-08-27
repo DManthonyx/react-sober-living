@@ -1,6 +1,17 @@
 import styled from 'styled-components';
 
-export const Section = styled.section`
+export const SectionHome = styled.section`
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0px;
+`
+
+export const SectionChange = styled.section`
+  width: 100%;
+`
+
+
+export const HomeDiv = styled.div`
 
 `
 
@@ -54,5 +65,9 @@ export const Small = styled.small`
 `
 
 export const P = styled.p`
+
+`
+
+export const Cancel = styled.p`
 
 `
