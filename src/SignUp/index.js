@@ -18,7 +18,7 @@ class SignUp extends Component {
     last_name: '',
     password: '',
     re_password: '',
-    user_type: 'admin',
+    user_type: 'business',
     phone_number: '',
     email: '',
     error: {
