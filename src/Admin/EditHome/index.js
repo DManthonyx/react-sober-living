@@ -15,8 +15,8 @@ const EditHome = (props) =>  {
       <Form onSubmit={props.closeAndEdit}>
         <Input className="edit-input" type="text" name="city" placeholder="city" value={props.homeToEdit.city} onChange={props.onInputEditChange} />
         <Input type="text" name="address" placeholder="address" value={props.homeToEdit.address} onChange={props.onInputEditChange} />
-        <Input type="text" name="longitude" placeholder="longitude" value={props.homeToEdit.longitude} onChange={props.onInputEditChange} />
-        <Input type="text" name="latitude" placeholder="latitude" value={props.homeToEdit.latitude} onChange={props.onInputEditChange} />
+        <Input type="number" name="longitude" placeholder="longitude" value={props.homeToEdit.longitude} onChange={props.onInputEditChange} />
+        <Input type="number" name="latitude" placeholder="latitude" value={props.homeToEdit.latitude} onChange={props.onInputEditChange} />
         <Input type="text" name="title" placeholder="title" value={props.homeToEdit.title} onChange={props.onInputEditChange} />
         <Input type="text" name="description" placeholder="description" value={props.homeToEdit.description} onChange={props.onInputEditChange} />
         <Input type="number" name="phone_number" placeholder="phone number" value={props.homeToEdit.phone_number} onChange={props.onInputEditChange} />

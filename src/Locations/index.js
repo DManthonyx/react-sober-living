@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from './Map'
+import Map from './MapContainer'
 
 import {
   Container,
@@ -64,6 +64,7 @@ class Locations extends Component {
                         <P>Title:  {home.title}</P>
                         <P>City:  {home.city}</P>
                         <P>Adress:  {home.address}</P>
+                        <P>Phone Number: {home.phone_number}</P>
                       </InfoDiv>
                     )
                   })
@@ -71,9 +72,6 @@ class Locations extends Component {
             </HomeDiv>
             </Div>
         </Article>
-      </Section>
-      <Section>
-
       </Section>
     </Container>
   )

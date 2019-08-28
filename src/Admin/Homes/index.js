@@ -316,8 +316,8 @@ class Homes extends Component {
         <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
         <Small>{this.state.error.city}</Small>
         <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
-        <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
-        <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
+        <Input type="number" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
+        <Input type="number" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
         <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
         <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
         <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />

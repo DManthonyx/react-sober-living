@@ -52,12 +52,7 @@ export const DetailDiv = styled.div`
 `
 
 export const DivCreate = styled.div`
-  display: none;
-  &.show {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+
 `
 
 export const Small = styled.small`
@@ -68,6 +63,6 @@ export const P = styled.p`
 
 `
 
-export const Cancel = styled.p`
+export const InputDiv = styled.div`
 
 `

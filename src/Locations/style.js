@@ -29,6 +29,10 @@ export const HomeDiv = styled.div`
 `
 
 export const InfoDiv = styled.div`
+  border-bottom: 1px solid;
+  padding: 10px;
+  width: 48%;
+  margin-bottom: 16px;
 `
 
 export const CurrentHome = styled.div`

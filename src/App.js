@@ -97,7 +97,6 @@ class App extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <div>
         <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout}/>

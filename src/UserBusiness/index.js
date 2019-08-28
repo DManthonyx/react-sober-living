@@ -17,7 +17,7 @@ import {
   DivCreate,
   BtnCreateHome,
   HomeDiv,
-  Cancel,
+  InputDiv,
   SectionHome,
   SectionChange,
 } from './style'
@@ -52,7 +52,6 @@ class UserBusiness extends Component {
     showEditModal: false,
     homeToEdit: {},
     isOpen: false,
-    setIsOpen: false
   } 
 
   async componentDidMount () {
@@ -269,12 +268,6 @@ class UserBusiness extends Component {
     }
   }
 
-  switch = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
-  }
-
   switchEdit = () => {
     this.setState({
     showEditModal: false
@@ -310,22 +303,32 @@ class UserBusiness extends Component {
         }
       </SectionHome>
       <SectionChange>
-      <DivCreate className={this.state.isOpen ? "show" : "hide"} >
+      <DivCreate>
       <H1>Create Home</H1>
       <Form onSubmit={this.submit}>
-        <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
-        <Small>{this.state.error.city}</Small>
-        <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
-        <Input type="text" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
-        <Input type="text" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
-        <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
-        <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
-        <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
-        <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
-        <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
+        <InputDiv>
+          <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
+          <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
+        </InputDiv>
+        <InputDiv>
+          <Input type="number" name="longitude" placeholder="longitude" value={longitude} onChange={this.onInputChange} />
+          <Input type="number" name="latitude" placeholder="latitude" value={latitude} onChange={this.onInputChange} />
+        </InputDiv>
+        <InputDiv>
+          <Input type="text" name="title" placeholder="title" value={title} onChange={this.onInputChange} />
+          <Input type="text" name="description" placeholder="description" value={description} onChange={this.onInputChange} />
+        </InputDiv>
+        <InputDiv>
+          <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
+          <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
+        </InputDiv>
+        <InputDiv>
+          <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
         <Input type="file" name="image" placeholder="image"  onChange={this.onInputChange} />
-        <Submit>SUBMIT</Submit>
-        <Cancel onClick={this.switch}>Cancel</Cancel>
+        </InputDiv>
+        <InputDiv>
+          <Submit>SUBMIT</Submit>
+        </InputDiv>
       </Form>
       </DivCreate>
         {

@@ -4,6 +4,8 @@ export const SectionHome = styled.section`
   display: flex;
   justify-content: space-around;
   margin: 15px 0px;
+  width: 100%;
+  height: 300px;
 `
 
 export const SectionChange = styled.section`
