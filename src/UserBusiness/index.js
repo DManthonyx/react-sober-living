@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import EditHome from '../Admin/EditHome'
 
 import {
@@ -20,6 +20,7 @@ import {
   InputDiv,
   SectionHome,
   SectionChange,
+  BtnDeleteAccnt
 } from './style'
 
 
@@ -274,7 +275,24 @@ class UserBusiness extends Component {
     })
   }
 
+  deleteAccount = async () => {
+    try {
+      const deleteAccount = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${this.props.id}/deleteaccount`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if(deleteAccount.status !== 200){
+        throw Error('Something happend on delete')
+      }
+      this.props.history.push('/logout')
+    } catch(err){
+      console.log(err);
+      return err
+    }
+  }
+
   render () {
+    console.log(this.state, 'user page state')
   const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
   return (
     <Div>
@@ -307,7 +325,7 @@ class UserBusiness extends Component {
       <H1>Create Home</H1>
       <Form onSubmit={this.submit}>
         <InputDiv>
-          <Input className="edit-input" type="text" name="city" placeholder="city" value={city} onChange={this.onInputChange} />
+          <Input className="edit-input" type="text" name="city" placeholder="city, state" value={city} onChange={this.onInputChange} />
           <Input type="text" name="address" placeholder="address" value={address} onChange={this.onInputChange} />
         </InputDiv>
         <InputDiv>
@@ -339,6 +357,7 @@ class UserBusiness extends Component {
         null
         }
       </SectionChange>
+      <BtnDeleteAccnt onClick={this.deleteAccount}>Delete Account</BtnDeleteAccnt>
     </Div>
   )
   }

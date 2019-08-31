@@ -66,3 +66,8 @@ export const P = styled.p`
 export const InputDiv = styled.div`
 
 `
+
+export const BtnDeleteAccnt = styled.button`
+
+`
+

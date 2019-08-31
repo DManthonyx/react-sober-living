@@ -46,9 +46,8 @@ class Home extends Component {
   }
 
   render () {
-    console.log(this.state.homes, 'this is homes, home page')
-    console.log(this.state.events,'this is events, home page')
-    console.log(this.state.resources,'this is resources, home page')
+    console.log(this.state, 'this is homes, home page')
+
     // <Img src={this.state.homes[0] && `${.env.REACT_APP_BACKEND_URL}/profile_pics/${this.state.homes[0].image}`}/>
   return (
     <Section>

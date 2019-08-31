@@ -11,7 +11,7 @@ class Account extends Component {
     if (this.props.user_type === 'admin') {
       account = <Admin id={id} {...this.props}/>
     }  else {
-      account = <UserBusiness id={id}/>
+      account = <UserBusiness id={id} {...this.props}/>
     }
     console.log(this.props.user_type, 'this is account ')
     return (

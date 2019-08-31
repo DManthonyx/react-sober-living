@@ -13,7 +13,7 @@ const EditHome = (props) =>  {
     <Section>
       <H1>Edit Home</H1>
       <Form onSubmit={props.closeAndEdit}>
-        <Input className="edit-input" type="text" name="city" placeholder="city" value={props.homeToEdit.city} onChange={props.onInputEditChange} />
+        <Input className="edit-input" type="text" name="city" placeholder="city, state" value={props.homeToEdit.city} onChange={props.onInputEditChange} />
         <Input type="text" name="address" placeholder="address" value={props.homeToEdit.address} onChange={props.onInputEditChange} />
         <Input type="number" name="longitude" placeholder="longitude" value={props.homeToEdit.longitude} onChange={props.onInputEditChange} />
         <Input type="number" name="latitude" placeholder="latitude" value={props.homeToEdit.latitude} onChange={props.onInputEditChange} />

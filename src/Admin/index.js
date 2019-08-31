@@ -45,7 +45,7 @@ class Admin extends Component {
 
   deleteUser = async (id) => {
     try {
-      const deleteUser = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${id}/delete`, {
+      const deleteUser = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${id}/admindeletebusiness`, {
         method: 'DELETE',
         credentials: 'include',
       });
