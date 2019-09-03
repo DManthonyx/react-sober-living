@@ -47,11 +47,7 @@ export class MapContainer extends Component {
                 )
             })
         }
-        <InfoWindow 
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}>
-        </InfoWindow>
+
         </Map>
         <DivInfo>
           <H1>Name:  {this.state.name}</H1>
