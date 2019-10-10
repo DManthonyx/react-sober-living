@@ -105,22 +105,41 @@ export const Div = styled.div`
 `
 
 export const DivSearch = styled.div`
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `
 
 export const Search = styled.input`
 text-align: center;
 margin: 3px;
-width: 26%;
+width: 29%;
 border: 1px solid #A8E0FF;
 border-radius: 3px;
 height: 30px;
 padding: 3px
 `
 
-export const SearchForm = styled.form`
+export const AutoComplete = styled.ul`
+  position: absolute;
+  width: 29%;
+  margin-top: 35px;
+  border-radius: 3px;
+  padding: 3px;
+  margin: 35px 0px 0px -3px;
+  z-index: 1;
+  color: white;
+  box-shadow: 0px 0px 3px 0px grey;
+  display: ${props => props.display ? props.display : "none"};
+  cursor: pointer;
 `
 
-export const SearchButton = styled.button`
-  display: none;
+export const SearchLink = styled(NavLink)`
+  display: block;
+  padding: 5px;
+  background: white;
+  color: black;
+  &:hover {
+    text-decoration: underline;
+  }
 `

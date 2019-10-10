@@ -7,41 +7,13 @@ import {
   Article,
   H1,
   Div,
-  HomeDiv,
+  BarDiv,
   InfoDiv,
   P,
-  CurrentHome
+  CurrentBar
 } from './style'
 
 class Locations extends Component {
-
-  state = {
-    homes: []
-  }
-
-  async componentDidMount() {
-    this.getHomes()
-  };
-
-  getHomes = async () => {
-    try {
-      const getLocations = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(getLocations.ok) {
-        const responseParsed = await getLocations.json()
-        this.setState({
-          homes: responseParsed.data
-        })
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   render() {
   return (
@@ -49,16 +21,13 @@ class Locations extends Component {
       <H1>Locations</H1>
       <Section>
         <Article>
-           <Map  homes={this.state.homes}/> 
+           <Map  homes={this.props.homes}/> 
         </Article>
         <Article>
         <Div>
-            <CurrentHome>
-
-            </CurrentHome>
-            <HomeDiv>
+            <BarDiv>
                 {
-                  this.state.homes.map((home,i) => {
+                  this.props.homes.map((home,i) => {
                     return (
                       <InfoDiv key={i}>
                         <P>Title:  {home.title}</P>
@@ -69,7 +38,7 @@ class Locations extends Component {
                     )
                   })
                 }
-            </HomeDiv>
+            </BarDiv>
             </Div>
         </Article>
       </Section>

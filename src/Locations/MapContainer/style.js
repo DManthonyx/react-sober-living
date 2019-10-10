@@ -4,9 +4,6 @@ export const DivInfo = styled.div`
 `
 
 export const Container = styled.div`
-  width: 100px;
-  height: 100px;
-  border: solid;
 `
 
 

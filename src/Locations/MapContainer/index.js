@@ -2,33 +2,21 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react';
 
 import {
-  DivInfo,
-  H1,
-  P,
   Container
 } from './style'
 
 export class MapContainer extends Component {
+
   state ={
     name: '',
     address: '',
   }
 
-  changeCurrentLoaction = (home) => {
-    this.setState({
-      name: home.title,
-      address: home.address,
-      phoneNumber: home.phone_number
-    })
-    console.log(home)
-  }
-
   render() {
-      const {homes} = this.props
+      const { homes } = this.props
       console.log(homes)
       const { name, address, phoneNumber} = this.state
     return (
-        <Container>
         <Map google={this.props.google} zoom={8}
         style={{width: '45%', height: '400px'}}
         initialCenter={{
@@ -47,14 +35,7 @@ export class MapContainer extends Component {
                 )
             })
         }
-
         </Map>
-        <DivInfo>
-          <H1>Name:  {this.state.name}</H1>
-          <P>Address: {this.state.address}</P>
-          <P>Phone Number: {this.state.phoneNumber}</P>
-        </DivInfo>
-        </Container>
     );
   }
 }

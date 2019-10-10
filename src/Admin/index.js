@@ -33,7 +33,6 @@ class Admin extends Component {
       })
       if(getUsers.ok) {
         const responseParsed = await getUsers.json()
-        console.log(responseParsed.data)
         this.setState({
           users: responseParsed.data
         })
@@ -71,7 +70,7 @@ class Admin extends Component {
       <Name>ADMIN {this.props.name}</Name>
       <Section>
         <H1>Homes</H1>
-        <Homes id={id}/>
+        <Homes id={id} homes={this.props.homes}/>
       </Section>
       <Section>
         <H1>Business</H1>

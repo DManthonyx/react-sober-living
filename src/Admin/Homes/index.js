@@ -22,11 +22,9 @@ import {
   SectionChange,
 } from './style'
 
-
-
 class Homes extends Component {
   state = {
-    homes: [],
+    homes: this.props.homes,
     city: '',
     address: '',
     longitude: '',  
@@ -54,30 +52,6 @@ class Homes extends Component {
     isOpen: false,
     setIsOpen: false
   } 
-
-  async componentDidMount () {
-    this.getHomes()
-  }
-
-  getHomes = async () => {
-    try {
-      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(getHomes.ok) {
-        const responseParsed = await getHomes.json()
-        this.setState({
-          homes: responseParsed.data
-        })
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   onInputChange = (e) => {
     if(e.target.name !== 'image'){
@@ -150,7 +124,6 @@ class Homes extends Component {
       })
       return false
     }
-
     return true
   };
 
@@ -169,8 +142,7 @@ class Homes extends Component {
       data.append('phone_number', this.state.phone_number);
       data.append('email', this.state.email);
       data.append('file', this.state.image);
-  
-  
+      
       const registerCall = this.createHome(data);
       this.setState({
         isOpen: !this.state.isOpen

@@ -23,7 +23,32 @@ class App extends Component {
     id:'',
     user_type: '',
     loading: false,
-    isLogged: false
+    isLogged: false,
+    homes: []
+  }
+
+  async componentDidMount () {
+    this.getHomes()
+  }
+
+  getHomes = async () => {
+    try {
+      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
+        method: 'GET',
+        credentials: 'include',// on every request we have to send the cookie
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if(getHomes.ok) {
+        const responseParsed = await getHomes.json()
+        this.setState({
+          homes: responseParsed.data
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   register = async (data) => {
@@ -37,7 +62,6 @@ class App extends Component {
       }
      })
       const parsedResponse = await registerResponse.json();
-      console.log(parsedResponse)
       this.setState({
        ...parsedResponse.data,
        loading: false,
@@ -60,7 +84,6 @@ class App extends Component {
         }
       })
       const parsedResponse = await loginResponse.json();
-      console.log(parsedResponse)
       if (parsedResponse.status.message !== "Username or Password is incorrect"){
         this.setState(() => {
           return {
@@ -99,15 +122,15 @@ class App extends Component {
   render () {
     return (
       <div>
-        <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout}/>
+        <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout} homes={this.state.homes}/>
         <Switch>
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
-          <Route exact path='/locations' render={(props) =>  <Locations {...props} />} />
+          <Route exact path='/locations' render={(props) =>  <Locations {...props} homes={this.state.homes} />} />
           {
             this.state.isLogged
             ?
-            <Route exact path='/account/:id' render={(props) =>  <Account {...props} name={this.state.name} user_type={this.state.user_type}/>} /> 
+            <Route exact path='/account/:id' render={(props) =>  <Account {...props} name={this.state.name} user_type={this.state.user_type} homes={this.state.homes}/>} /> 
             :
             <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           }

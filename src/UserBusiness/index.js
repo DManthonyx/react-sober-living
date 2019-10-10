@@ -292,7 +292,6 @@ class UserBusiness extends Component {
   }
 
   render () {
-    console.log(this.state, 'user page state')
   const { city, address, longitude, latitude, title, description, phone_number, email, link, homes} = this.state
   return (
     <Div>

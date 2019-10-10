@@ -22,7 +22,7 @@ const EditHome = (props) =>  {
         <Input type="number" name="phone_number" placeholder="phone number" value={props.homeToEdit.phone_number} onChange={props.onInputEditChange} />
         <Input type="email" name="email" placeholder="email" value={props.homeToEdit.email} onChange={props.onInputEditChange} />
         <Input type="text" name="link" placeholder="link to website" value={props.homeToEdit.link} onChange={props.onInputEditChange} />
-        <Input type="file" name="image" placeholder="image"  onChange={props.onInputEditChange} />
+        <Input type="file" name="image" placeholder="image" onChange={props.onInputEditChange} />
         <Submit>SUBMIT</Submit>
         <Cancel onClick={props.switchEdit}>Cancel</Cancel>
       </Form>

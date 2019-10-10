@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 
 import {
   Section,
@@ -18,7 +17,7 @@ class SignUp extends Component {
     last_name: '',
     password: '',
     re_password: '',
-    user_type: 'business',
+    user_type: 'admin',
     phone_number: '',
     email: '',
     error: {
@@ -86,7 +85,6 @@ class SignUp extends Component {
     data.append('user_type', this.state.user_type);
     data.append('phone_number', this.state.phone_number);
     data.append('email', this.state.email);
-
     const registerCall = this.props.register(data);
     registerCall.then((data) => {
         if(data.status.message === "Success"){

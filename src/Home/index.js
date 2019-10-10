@@ -46,14 +46,11 @@ class Home extends Component {
   }
 
   render () {
-    console.log(this.state, 'this is homes, home page')
-
-    // <Img src={this.state.homes[0] && `${.env.REACT_APP_BACKEND_URL}/profile_pics/${this.state.homes[0].image}`}/>
   return (
     <Section>
       <Container>
       <DivImgBox>
-        <Img src={"https://i.imgur.com/8dHzvdg.jpg"}/>
+        <Img src="https://i.imgur.com/8dHzvdg.jpg"/>
         <Div>
           <DivContent>
             <H2>West Covina, Ca</H2>

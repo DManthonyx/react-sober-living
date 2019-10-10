@@ -25,7 +25,7 @@ export const H1 = styled.h1`
   margin: 10px 0px
 `
 
-export const HomeDiv = styled.div`
+export const BarDiv = styled.div`
 `
 
 export const InfoDiv = styled.div`
@@ -35,7 +35,7 @@ export const InfoDiv = styled.div`
   margin-bottom: 16px;
 `
 
-export const CurrentHome = styled.div`
+export const CurrentBar = styled.div`
 `
 
 export const Div = styled.div`

@@ -51,8 +51,6 @@ class LogIn extends Component {
     login.then((data) => {
       if(data.status.message === 'Success'){
         this.props.history.push(`/account/${data.data.id}`)
-      } else {
-        console.log(data, this.props)
       }
     }).catch((err) => {
       console.log(err)

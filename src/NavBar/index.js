@@ -1,6 +1,5 @@
 import React,  { Component } from 'react';
 import Hamburger from '../Hamburger';
-import { Link } from 'react-router-dom';
 import {
   NavContainer,
   Nav,
@@ -14,47 +13,46 @@ import {
   Logout,
   DivSearch,
   Search,
-  SearchForm,
-  SearchButton
+  AutoComplete,
+  SearchLink
 } from './style'
 
 class NavBar extends Component {
   state = {
     isOpen: false,
     setIsOpen: false,
-    homes: [],
+    searchDisplay: '',
+    searchHomes: ''
   }
 
-  async componentDidMount () {
-    this.getHomes()
+  onInputChange = (e) => { 
+    this.setState({ 
+      [e.target.name]: e.target.value,
+      searchDisplay: 'block',
+    })
   }
 
-  getHomes = async () => {
-    try {
-      const getHomes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/locations/`, {
-        method: 'GET',
-        credentials: 'include',// on every request we have to send the cookie
-        headers: {
-          'Content-Type': 'application/json'
+  filterHomes = (e) => {
+    const array = []
+    const homes = this.props.homes
+    const searchHomes = this.state.searchHomes
+    // const autoComplete = document.querySelector(".autocomplete");
+
+    // if input value exists, repopulate the autocomplete list
+    if(searchHomes){
+      for(let i = 0; i < homes.length; i++){
+        if(homes[i].title.toUpperCase().includes(searchHomes.toUpperCase())){
+          array.push(homes[i])
         }
-      })
-      if(getHomes.ok) {
-        const responseParsed = await getHomes.json()
-        this.setState({
-          homes: responseParsed.data
-        })
       }
-    } catch (err) {
-      console.log(err)
     }
+    return array
   }
 
-  filter = e => {
-    e.preventDefault()
-    
-    const value = document.querySelector('.filter').value
-    this.props.history.push(`/locations/:${value}`)
-
+  removeList = () => {
+    this.setState({
+      searchDisplay: 'none'
+    })
   }
 
   render() {
@@ -65,12 +63,14 @@ class NavBar extends Component {
     const notLoggedRoutes = ["home", "locations", "signup", "login"];
     const { logged,id, logout } = this.props
   return (
-    <NavContainer color={"white"}>
+    <NavContainer color={"white"} onClick={this.removeList}>
       <DivSearch>
-        <SearchForm onSubmit={this.filter} >
-          <Search className="filter" type="text" placeholder="Search for homes...."/>
-          <SearchButton></SearchButton>
-        </SearchForm>
+        <Search className="filter" type="text" placeholder="Search for homes...." name="searchHomes" value={this.state.searchHomes} onChange={this.onInputChange}/>
+        <AutoComplete display={this.state.searchDisplay} className="autocomplete">
+          {this.filterHomes().map((home,i)=>{
+            return <SearchLink exact to={`/locations/`} key={i}>{`${home.title}`}</SearchLink>
+          })}
+        </AutoComplete>
       </DivSearch>
       <Nav>
         <DivTitle>

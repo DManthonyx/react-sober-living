@@ -9,11 +9,10 @@ class Account extends Component {
     const { id } = this.props.match.params
     let account;
     if (this.props.user_type === 'admin') {
-      account = <Admin id={id} {...this.props}/>
+      account = <Admin id={id} {...this.props} homes={this.props.homes}/>
     }  else {
       account = <UserBusiness id={id} {...this.props}/>
     }
-    console.log(this.props.user_type, 'this is account ')
     return (
       <div>
         {account}
