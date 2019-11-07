@@ -7,38 +7,39 @@ import {
   Article,
   H1,
   Div,
-  BarDiv,
+  HomeDiv,
   InfoDiv,
   P,
-  CurrentBar
+  Button
 } from './style'
 
 class Locations extends Component {
-
   render() {
   return (
     <Container>
       <H1>Locations</H1>
       <Section>
         <Article>
-           <Map  homes={this.props.homes}/> 
+           <Map  homes={this.props.homes} viewHome={this.props.viewHome} cordinates={this.props.cordinates}/> 
         </Article>
         <Article>
         <Div>
-            <BarDiv>
+            <HomeDiv>
                 {
                   this.props.homes.map((home,i) => {
                     return (
                       <InfoDiv key={i}>
                         <P>Title:  {home.title}</P>
                         <P>City:  {home.city}</P>
-                        <P>Adress:  {home.address}</P>
+                        <P>Address:  {home.address}</P>
                         <P>Phone Number: {home.phone_number}</P>
+                        <Button onClick={() => this.props.viewHome(home.id)}>View Home</Button>
                       </InfoDiv>
                     )
                   })
                 }
-            </BarDiv>
+                
+            </HomeDiv>
             </Div>
         </Article>
       </Section>

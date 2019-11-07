@@ -46,6 +46,7 @@ class Home extends Component {
   }
 
   render () {
+    console.log("this is home ----------", this.state.homes)
   return (
     <Section>
       <Container>

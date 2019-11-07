@@ -7,15 +7,16 @@ class Account extends Component {
   
   render () {
     const { id } = this.props.match.params
-    let account;
-    if (this.props.user_type === 'admin') {
-      account = <Admin id={id} {...this.props} homes={this.props.homes}/>
-    }  else {
-      account = <UserBusiness id={id} {...this.props}/>
-    }
+    // let account;
+    // if (this.props.user_type === 'admin') {
+    //   account = <Admin id={id} {...this.props} homes={this.props.homes}/>
+    // }  else {
+    //   account = <UserBusiness id={id} {...this.props}/>
+    // }
     return (
       <div>
-        {account}
+        {/* {account} */}
+        <Admin id={id} {...this.props} homes={this.props.homes}/>
       </div>
     )
   }

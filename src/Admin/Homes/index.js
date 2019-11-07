@@ -30,7 +30,8 @@ class Homes extends Component {
     longitude: '',  
     latitude: '',
     title: '',
-    image: '',
+    image_1: '',
+    image_2: '',
     description: '',
     phone_number: '',
     email: '',
@@ -54,10 +55,10 @@ class Homes extends Component {
   } 
 
   onInputChange = (e) => {
-    if(e.target.name !== 'image'){
+    if(e.target.type !== 'file'){
       this.setState({[e.target.name]: e.target.value});
     } else {
-      this.setState({image: e.target.files[0]});
+      this.setState({[e.target.name]: e.target.files[0]});
     }
   }
 
@@ -97,7 +98,7 @@ class Homes extends Component {
         longitude: '',
         latitude: '',
         title: '',
-        image: '',
+        image_1: '',
         description: '',
         phone_number: '',
         email: '',
@@ -124,6 +125,7 @@ class Homes extends Component {
       })
       return false
     }
+
     return true
   };
 
@@ -141,8 +143,10 @@ class Homes extends Component {
       data.append('link', this.state.link);
       data.append('phone_number', this.state.phone_number);
       data.append('email', this.state.email);
-      data.append('file', this.state.image);
-      
+      data.append('file', this.state.image_1);
+      data.append('file', this.state.image_2);
+  
+  
       const registerCall = this.createHome(data);
       this.setState({
         isOpen: !this.state.isOpen
@@ -179,6 +183,7 @@ class Homes extends Component {
   }
 
   showModal = (home) => {
+
     if(this.state.homeToEdit === {}) {
       this.setState({
         homeToEdit: home,
@@ -295,7 +300,8 @@ class Homes extends Component {
         <Input type="number" name="phone_number" placeholder="phone number" value={phone_number} onChange={this.onInputChange} />
         <Input type="email" name="email" placeholder="email" value={email} onChange={this.onInputChange} />
         <Input type="text" name="link" placeholder="link to website" value={link} onChange={this.onInputChange} />
-        <Input type="file" name="image" placeholder="image"  onChange={this.onInputChange} />
+        <Input type="file" name="image_1" placeholder="image"  onChange={this.onInputChange} />
+        <Input type="file" name="image_2" placeholder="image"  onChange={this.onInputChange} />
         <Submit>SUBMIT</Submit>
         <Cancel onClick={this.switch}>Cancel</Cancel>
       </Form>

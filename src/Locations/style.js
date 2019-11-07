@@ -13,6 +13,7 @@ export const Section = styled.div`
 `
 
 export const Article = styled.div`
+  z-index: 1;
   width: 48%;
 `
 
@@ -25,7 +26,11 @@ export const H1 = styled.h1`
   margin: 10px 0px
 `
 
-export const BarDiv = styled.div`
+export const Button = styled.button`
+  
+`
+
+export const HomeDiv = styled.div`
 `
 
 export const InfoDiv = styled.div`
@@ -33,10 +38,9 @@ export const InfoDiv = styled.div`
   padding: 10px;
   width: 48%;
   margin-bottom: 16px;
+  
 `
 
-export const CurrentBar = styled.div`
-`
 
 export const Div = styled.div`
 `

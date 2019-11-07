@@ -14,7 +14,6 @@ export class MapContainer extends Component {
 
   render() {
       const { homes } = this.props
-      console.log(homes)
       const { name, address, phoneNumber} = this.state
     return (
         <Map google={this.props.google} zoom={8}
@@ -27,10 +26,14 @@ export class MapContainer extends Component {
         {
             (homes|| []).map((home, i) => {
                 return (
-                    <Marker 
+                    <Marker
+                    initialCenter={{
+                      lat: this.props.cordinates.lat, 
+                      lng: this.props.cordinates.lng
+                    }}
                     key={i}
                     position={{lat: home.latitude, lng: home.longitude}}
-                    onClick={() => this.changeCurrentLoaction(home)}
+                    onClick={() => this.props.viewHome(home.id)}
                     />
                 )
             })

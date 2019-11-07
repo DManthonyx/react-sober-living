@@ -68,7 +68,9 @@ class NavBar extends Component {
         <Search className="filter" type="text" placeholder="Search for homes...." name="searchHomes" value={this.state.searchHomes} onChange={this.onInputChange}/>
         <AutoComplete display={this.state.searchDisplay} className="autocomplete">
           {this.filterHomes().map((home,i)=>{
-            return <SearchLink exact to={`/locations/`} key={i}>{`${home.title}`}</SearchLink>
+            return (
+                <SearchLink exact to={`/locations/${home.id}`} key={i}>{`${home.title}`}</SearchLink>
+            )
           })}
         </AutoComplete>
       </DivSearch>

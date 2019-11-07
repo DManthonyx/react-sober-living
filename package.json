@@ -11,7 +11,8 @@
     "react-scripts": "3.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.4.1",
+    "styled-icons": "^8.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
