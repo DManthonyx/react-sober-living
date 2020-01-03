@@ -142,7 +142,7 @@ class App extends Component {
     console.log(this.state.userLocation, 'this is user location')
     return (
       <div>
-        <NavBar logged={this.state.isLogged} id={this.state.id} logout={this.logout} homes={this.state.homes}/>
+        <NavBar  props={this.props} logged={this.state.isLogged} id={this.state.id} logout={this.logout} homes={this.state.homes}/>
         <Switch>
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />

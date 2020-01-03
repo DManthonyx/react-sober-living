@@ -14,23 +14,20 @@ export class MapContainer extends Component {
 
   render() {
       const { homes } = this.props
+      console.log(homes)
       const { name, address, phoneNumber} = this.state
     return (
         <Map google={this.props.google} zoom={8}
         style={{width: '45%', height: '400px'}}
         initialCenter={{
-          lat: 34.0522, 
-          lng: -118.2437
+          lat: this.props.cordinates.lat, 
+          lng: this.props.cordinates.lat
         }}
         >
         {
-            (homes|| []).map((home, i) => {
+            (homes || []).map((home, i) => {
                 return (
-                    <Marker
-                    initialCenter={{
-                      lat: this.props.cordinates.lat, 
-                      lng: this.props.cordinates.lng
-                    }}
+                    <Marker 
                     key={i}
                     position={{lat: home.latitude, lng: home.longitude}}
                     onClick={() => this.props.viewHome(home.id)}

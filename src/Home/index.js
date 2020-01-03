@@ -9,7 +9,8 @@ import {
   DivContent,
   H2,
   Button,
-  Container
+  Container,
+  Box
 } from './style'
 
 class Home extends Component {
@@ -50,6 +51,7 @@ class Home extends Component {
   return (
     <Section>
       <Container>
+        {/* <Box></Box> */}
       <DivImgBox>
         <Img src="https://i.imgur.com/8dHzvdg.jpg"/>
         <Div>

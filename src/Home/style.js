@@ -1,4 +1,12 @@
 import styled from 'styled-components';
+import img from '../images/download.jpg'
+
+export const Box = styled.div`
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  background-image: url(${img});
+`
 
 export const Section = styled.div`
   display: flex;

@@ -32,6 +32,12 @@ class NavBar extends Component {
     })
   }
 
+  displayBlock = () => {
+    this.setState({
+      searchDisplay: 'block'
+    })
+  }
+
   filterHomes = (e) => {
     const array = []
     const homes = this.props.homes
@@ -65,7 +71,7 @@ class NavBar extends Component {
   return (
     <NavContainer color={"white"} onClick={this.removeList}>
       <DivSearch>
-        <Search className="filter" type="text" placeholder="Search for homes...." name="searchHomes" value={this.state.searchHomes} onChange={this.onInputChange}/>
+        <Search className="filter" type="text" placeholder="Search for homes...." name="searchHomes" value={this.state.searchHomes} onChange={this.onInputChange} onClick={() => this.displayBlock()}/>
         <AutoComplete display={this.state.searchDisplay} className="autocomplete">
           {this.filterHomes().map((home,i)=>{
             return (
