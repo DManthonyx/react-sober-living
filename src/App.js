@@ -16,7 +16,6 @@ const My404 = () => {
   )
 };
 
-
 class App extends Component {
 
   state = {
@@ -68,28 +67,28 @@ class App extends Component {
     this.props.history.push(`/locations/${id}`)
   }
 
-  register = async (data) => {
-    try {
-      const registerResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-        headers: {
-        'enctype': 'multipart/form-data'
-      }
-     })
-      const parsedResponse = await registerResponse.json();
-      console.log(parsedResponse)
-      this.setState({
-       ...parsedResponse.data,
-       loading: false,
-       isLogged: !this.state.isLogged
-      })
-     return parsedResponse;
-    } catch (err) {
-     console.log(err)
-    };
-  };
+  // register = async (data) => {
+  //   try {
+  //     const registerResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, {
+  //       method: 'POST',
+  //       credentials: 'include',
+  //       body: data,
+  //       headers: {
+  //       'enctype': 'multipart/form-data'
+  //     }
+  //    })
+  //     const parsedResponse = await registerResponse.json();
+  //     console.log(parsedResponse)
+  //     this.setState({
+  //      ...parsedResponse.data,
+  //      loading: false,
+  //      isLogged: !this.state.isLogged
+  //     })
+  //    return parsedResponse;
+  //   } catch (err) {
+  //    console.log(err)
+  //   };
+  // };
 
   login = async (loginInfo) => {
     try {
@@ -121,7 +120,7 @@ class App extends Component {
 
   logout = async () => {
     try {
-      const loginResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/logout`, {
+      const logoutResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/logout`, {
         method: 'GET',
         credentials: 'include',
       })
@@ -132,7 +131,6 @@ class App extends Component {
         id: ''
       })
       this.props.history.push('/home')
-
     } catch(err) {
       console.log(err)
     }
@@ -144,19 +142,17 @@ class App extends Component {
       <div>
         <NavBar  props={this.props} logged={this.state.isLogged} id={this.state.id} logout={this.logout} homes={this.state.homes}/>
         <Switch>
+          {
+            this.state.isLogged
+            ?
+            <Route exact path='/account/:id' render={(props) =>  <Account {...props} homes={this.state.homes} name={this.state.name} user_type={this.state.user_type}/>} />
+            :
+            null
+          }
           <Route exact path='/' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
           <Route exact path='/locations' render={(props) =>  <Locations {...props} homes={this.state.homes} viewHome={this.viewHome} cordinates={this.state.userLocation} />} />
-          {/* {
-            this.state.isLogged
-            ?
-            <Route exact path='/account/:id' render={(props) =>  <Account {...props} homes={this.state.homes} name={this.state.name} user_type={this.state.user_type}/>} /> 
-            :
-            <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
-          } */}
-          <Route exact path='/account/:id' render={(props) =>  <Account {...props} homes={this.state.homes} name={this.state.name} user_type={this.state.user_type}/>} />
-          <Route exact path='/home' render={(props) =>  <Home {...props} logout={this.logout}/>} />
-          <Route exact path='/signup' render={(props) =>  <SignUp {...props} register={this.register} />} />         
+          {/* <Route exact path='/signup' render={(props) =>  <SignUp {...props} register={this.register} />} /> */}
           <Route exact path='/login' render={(props) =>  <LogIn {...props} login={this.login} />} />
           <Route exact path='/locations/:id' render={(props) => <ViewHome {...props} />} />
           <Route component={ My404 } />

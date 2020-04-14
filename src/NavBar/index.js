@@ -66,7 +66,7 @@ class NavBar extends Component {
     window.onresize = ()=> (window.innerWidth > 900 && isOpen) && setIsOpen(false)
     window.onClick = () => (setIsOpen(!isOpen))
     const isLoggedRoutes = ["home", "locations", "account"];
-    const notLoggedRoutes = ["home", "locations", "signup", "login"];
+    const notLoggedRoutes = ["home", "locations", "login"];
     const { logged,id, logout } = this.props
   return (
     <NavContainer color={"white"} onClick={this.removeList}>

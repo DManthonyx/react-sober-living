@@ -49,6 +49,7 @@ class LogIn extends Component {
     if(isValid) {
     const login = this.props.login(this.state)
     login.then((data) => {
+      console.log(data, 'this is data login')
       if(data.status.message === 'Success'){
         this.props.history.push(`/account/${data.data.id}`)
       }
